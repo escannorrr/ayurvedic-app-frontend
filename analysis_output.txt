@@ -1,0 +1,21 @@
+Analyzing vaidyaai...                                           
+
+warning • Unused import: 'package:flutter/material.dart' • lib/core/router/app_router.dart:1:8 • unused_import
+warning • Unused import: '../bloc/case_details_event.dart' • lib/features/cases/presentation/screens/case_details_screen.dart:6:8 • unused_import
+warning • Unused import: 'dart:async' • lib/features/cases/presentation/widgets/cases_search_bar.dart:3:8 • unused_import
+warning • Unused import: '../bloc/dashboard_event.dart' • lib/features/dashboard/presentation/screens/dashboard_screen.dart:10:8 • unused_import
+warning • Unused import: '../../../../core/layout/max_width_container.dart' • lib/features/dashboard/presentation/screens/dashboard_screen.dart:12:8 • unused_import
+warning • Unused import: '../../domain/entities/settings_entity.dart' • lib/features/settings/presentation/bloc/settings_event.dart:2:8 • unused_import
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/presentation/screens/settings_screen.dart:166:57 • deprecated_member_use
+warning • A value for optional parameter 'icon' isn't ever given • lib/features/settings/presentation/widgets/language_preferences_card.dart:228:10 • unused_element_parameter
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/presentation/widgets/language_preferences_card.dart:244:76 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/presentation/widgets/language_section.dart:25:49 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/presentation/widgets/language_section.dart:108:33 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/presentation/widgets/security_plan_card.dart:71:59 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/presentation/widgets/security_plan_card.dart:114:65 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/presentation/widgets/security_plan_card.dart:140:46 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/presentation/widgets/security_plan_card.dart:175:56 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/presentation/widgets/security_plan_card.dart:227:62 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/presentation/widgets/settings_header.dart:26:51 • deprecated_member_use
+
+17 issues found. (ran in 1.7s)
