@@ -3,14 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vaidyaai/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../bloc/saved_cases_bloc.dart';
-import '../bloc/saved_cases_event.dart';
-import '../bloc/saved_cases_state.dart';
+import '../../../../core/utils/ui_utils.dart';
+import '../../../../core/utils/screen_size.dart';
+import '../../../../core/layout/max_width_container.dart';
+import '../bloc/cases_bloc.dart';
+import '../bloc/cases_event.dart';
+import '../bloc/cases_state.dart';
+import '../widgets/cases_search_bar.dart';
+import '../widgets/cases_filter_widget.dart';
 import '../widgets/cases_skeleton_loader.dart';
 import '../widgets/empty_cases_widget.dart';
 import '../widgets/case_list_view.dart';
-import '../../../../core/utils/screen_size.dart';
-import '../../../../core/layout/max_width_container.dart';
 
 class SavedCasesScreen extends StatefulWidget {
   const SavedCasesScreen({super.key});
@@ -28,7 +31,7 @@ class _SavedCasesScreenState extends State<SavedCasesScreen> with AutomaticKeepA
   @override
   void initState() {
     super.initState();
-    context.read<SavedCasesBloc>().add(const SavedCasesEvent.fetchCases());
+    context.read<CasesBloc>().add(const CasesEvent.loadCases(1));
   }
 
   @override
@@ -174,7 +177,7 @@ class _SavedCasesScreenState extends State<SavedCasesScreen> with AutomaticKeepA
                      child: TextField(
                        controller: _searchController,
                        onChanged: (value) {
-                         context.read<SavedCasesBloc>().add(SavedCasesEvent.searchCases(value));
+                         context.read<CasesBloc>().add(CasesEvent.searchCases(value));
                        },
                        decoration: InputDecoration(
                          hintText: l10n.searchPatients,
@@ -223,15 +226,17 @@ class _SavedCasesScreenState extends State<SavedCasesScreen> with AutomaticKeepA
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(24),
-                child: BlocBuilder<SavedCasesBloc, SavedCasesState>(
+                child: BlocConsumer<CasesBloc, CasesState>(
+                  listener: (context, state) {
+                    if (state.errorMessage != null) {
+                      UIUtils.showError(context, state.errorMessage!);
+                    }
+                  },
                   builder: (context, state) {
-                    if (state.isLoading) {
+                    if (state.isLoading && state.cases.isEmpty) {
                       return const CasesSkeletonLoader();
                     }
-                    if (state.errorMessage != null) {
-                      return Center(child: Text(state.errorMessage!, style: const TextStyle(color: AppColors.error)));
-                    }
-                    if (state.cases.isEmpty) {
+                    if (state.cases.isEmpty && !state.isLoading) {
                       return const EmptyCasesWidget();
                     }
                     return CaseListView(cases: state.cases, isMobile: isMobile);
@@ -286,46 +291,70 @@ class _PaginationFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            l10n.showingArchivedCases,
-            style: TextStyle(color: AppColors.outline, fontSize: 12),
-          ),
-          Row(
+    return BlocBuilder<CasesBloc, CasesState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _PageNavButton(icon: Icons.chevron_left),
-              const SizedBox(width: 8),
-              _PageNumberButton(number: '1', isActive: true),
-              _PageNumberButton(number: '2', isActive: false),
-              _PageNumberButton(number: '3', isActive: false),
-              const SizedBox(width: 8),
-              _PageNavButton(icon: Icons.chevron_right),
+              Text(
+                '${l10n.showingArchivedCases} Page ${state.currentPage}',
+                style: TextStyle(color: AppColors.outline, fontSize: 12),
+              ),
+              Row(
+                children: [
+                  _PageNavButton(
+                    icon: Icons.chevron_left,
+                    onTap: state.currentPage > 1
+                        ? () => context.read<CasesBloc>().add(const CasesEvent.previousPage())
+                        : null,
+                  ),
+                  const SizedBox(width: 8),
+                  _PageNumberButton(
+                    number: state.currentPage.toString(),
+                    isActive: true,
+                  ),
+                  const SizedBox(width: 8),
+                  _PageNavButton(
+                    icon: Icons.chevron_right,
+                    onTap: state.hasMore
+                        ? () => context.read<CasesBloc>().add(const CasesEvent.nextPage())
+                        : null,
+                  ),
+                ],
+              ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
 
 class _PageNavButton extends StatelessWidget {
   final IconData icon;
-  const _PageNavButton({required this.icon});
+  final VoidCallback? onTap;
+  const _PageNavButton({required this.icon, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 36,
-      height: 36,
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.2)),
-        borderRadius: BorderRadius.circular(8),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        width: 36,
+        height: 36,
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.2)),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Icon(
+          icon,
+          size: 18,
+          color: onTap != null ? AppColors.outline : AppColors.outline.withValues(alpha: 0.3),
+        ),
       ),
-      child: Icon(icon, size: 18, color: AppColors.outline),
     );
   }
 }

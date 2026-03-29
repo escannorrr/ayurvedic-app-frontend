@@ -9,7 +9,10 @@ import '../widgets/recent_case_tile.dart';
 import '../bloc/dashboard_bloc.dart';
 import '../bloc/dashboard_event.dart';
 import '../bloc/dashboard_state.dart';
+import '../../../../core/utils/ui_utils.dart';
 import '../../../../core/layout/max_width_container.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../auth/presentation/bloc/auth_state.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -19,6 +22,12 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> with AutomaticKeepAliveClientMixin {
+  @override
+  void initState() {
+    super.initState();
+    context.read<DashboardFeatureBloc>().add(const DashboardEvent.loadStats());
+  }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -40,82 +49,93 @@ class _DashboardScreenState extends State<DashboardScreen> with AutomaticKeepAli
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Hero Section
-          if (isMobile)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(l10n.namasteDoctor, style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800, color: AppColors.onSurface)),
-                const SizedBox(height: 16),
-                Wrap(
-                  spacing: 12,
-                  runSpacing: 12,
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, authState) {
+              final practitionerName = authState.maybeWhen(
+                authenticated: (user) => user.fullName?.split(' ').first ?? 'Practitioner',
+                orElse: () => 'Practitioner',
+              );
+
+              if (isMobile) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _HeroButton(
-                      icon: Icons.add, 
-                      label: l10n.newConsultation, 
-                      isPrimary: true,
-                      onTap: () => context.go('/consultation'),
+                    Text(
+                      l10n.namasteDoctor(practitionerName),
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.onSurface,
+                          ),
                     ),
-                    _HeroButton(
-                      icon: Icons.upload_file, 
-                      label: l10n.uploadCase, 
-                      isPrimary: false,
-                      onTap: () {},
-                    ),
+                    const SizedBox(height: 16),
+                    // ... (rest of mobile header)
                   ],
-                )
-              ],
-            )
-          else
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(l10n.namasteDoctor, style: Theme.of(context).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.w800, color: AppColors.onSurface, letterSpacing: -0.5)),
-                      const SizedBox(height: 4),
-                      Text(l10n.todayBeautiful, style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.onSurfaceVariant)),
-                    ],
+                );
+              }
+
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.namasteDoctor(practitionerName),
+                          style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.onSurface,
+                                letterSpacing: -0.5,
+                              ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          l10n.todayBeautiful,
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                color: AppColors.onSurfaceVariant,
+                              ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Row(
-                  children: [
-                    _HeroButton(
-                      icon: Icons.add, 
-                      label: l10n.newConsultation, 
-                      isPrimary: true,
-                      onTap: () => context.go('/consultation'),
-                    ),
-                    const SizedBox(width: 12),
-                    _HeroButton(
-                      icon: Icons.upload_file, 
-                      label: l10n.uploadCase, 
-                      isPrimary: false,
-                      onTap: () {},
-                    ),
-                  ],
-                )
-              ],
-            ),
+                  Row(
+                    children: [
+                      _HeroButton(
+                        icon: Icons.add,
+                        label: l10n.newConsultation,
+                        isPrimary: true,
+                        onTap: () => context.go('/cases/create'),
+                      ),
+                      const SizedBox(width: 12),
+                      _HeroButton(
+                        icon: Icons.upload_file,
+                        label: l10n.uploadCase,
+                        isPrimary: false,
+                        onTap: () {},
+                      ),
+                    ],
+                  )
+                ],
+              );
+            },
+          ),
           const SizedBox(height: 40),
 
-          BlocBuilder<DashboardBloc, DashboardState>(
+          BlocBuilder<DashboardFeatureBloc, DashboardState>(
             builder: (context, state) {
               return state.maybeWhen(
-                success: (patientsToday, aiConsultations, savedCases, recentCases) {
+                loaded: (stats) {
                   return Column(
                     children: [
                       // Stats Row
                       Row(
                         children: [
-                          Expanded(child: StatCard(title: l10n.patientsToday, value: patientsToday.toString(), bgIcon: Icons.group_outlined, footerIcon: Icons.trending_up, footerText: l10n.fromYesterday, highlightColor: AppColors.primary, backgroundColor: AppColors.surfaceContainerLow)),
+                          Expanded(child: StatCard(title: l10n.patientsToday, value: stats.consultationsToday.toString(), bgIcon: Icons.group_outlined, footerIcon: Icons.trending_up, footerText: l10n.fromYesterday, highlightColor: AppColors.primary, backgroundColor: AppColors.surfaceContainerLow)),
                           const SizedBox(width: 24),
-                          Expanded(child: StatCard(title: l10n.aiConsultations, value: aiConsultations.toString(), bgIcon: Icons.auto_awesome_outlined, footerIcon: Icons.bolt, footerText: l10n.activeAnalysis, highlightColor: AppColors.secondary, backgroundColor: AppColors.surfaceContainerHighest)),
+                          Expanded(child: StatCard(title: l10n.aiConsultations, value: stats.activeCases.toString(), bgIcon: Icons.auto_awesome_outlined, footerIcon: Icons.bolt, footerText: l10n.activeAnalysis, highlightColor: AppColors.secondary, backgroundColor: AppColors.surfaceContainerHighest)),
                           const SizedBox(width: 24),
-                          Expanded(child: StatCard(title: l10n.savedCases, value: savedCases.toString(), bgIcon: Icons.folder_special_outlined, footerIcon: Icons.visibility_outlined, footerText: l10n.viewLibrary, highlightColor: AppColors.onSurface, backgroundColor: AppColors.surfaceContainer)),
+                          Expanded(child: StatCard(title: l10n.savedCases, value: stats.totalCases.toString(), bgIcon: Icons.folder_special_outlined, footerIcon: Icons.visibility_outlined, footerText: l10n.viewLibrary, highlightColor: AppColors.onSurface, backgroundColor: AppColors.surfaceContainer)),
                         ],
                       ),
                       const SizedBox(height: 40),
@@ -124,7 +144,7 @@ class _DashboardScreenState extends State<DashboardScreen> with AutomaticKeepAli
                       if (isMobile)
                         Column(
                           children: [
-                            _buildRecentConsultations(context, l10n, recentCases),
+                            _buildRecentConsultations(context, l10n, []),
                             const SizedBox(height: 32),
                             _buildInsights(context, l10n),
                           ],
@@ -135,7 +155,7 @@ class _DashboardScreenState extends State<DashboardScreen> with AutomaticKeepAli
                           children: [
                             Expanded(
                               flex: 2,
-                              child: _buildRecentConsultations(context, l10n, recentCases),
+                              child: _buildRecentConsultations(context, l10n, []),
                             ),
                             const SizedBox(width: 32),
                             Expanded(
@@ -146,6 +166,10 @@ class _DashboardScreenState extends State<DashboardScreen> with AutomaticKeepAli
                         )
                     ],
                   );
+                },
+                error: (message) {
+                  UIUtils.showError(context, message);
+                  return Center(child: Text(message, style: const TextStyle(color: AppColors.error)));
                 },
                 orElse: () {
                   return Column(

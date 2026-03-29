@@ -1,87 +1,39 @@
-import 'package:dio/dio.dart';
-import '../models/case_model.dart';
+import 'package:vaidyaai/core/api/api_client.dart';
+import 'package:vaidyaai/features/cases/data/models/case_model.dart';
+import 'package:vaidyaai/features/cases/data/models/create_case_request_model.dart';
 
 abstract class CasesRemoteDataSource {
-  Future<List<CaseModel>> getCases();
-  Future<List<CaseModel>> searchCases(String query);
-  Future<List<CaseModel>> filterCases(DateTime? startDate, DateTime? endDate);
+  Future<List<CaseModel>> getCases({required int page, required int limit});
+  Future<CaseModel> getCaseById(String id);
+  Future<void> createCase(CreateCaseRequestModel request);
 }
 
 class CasesRemoteDataSourceImpl implements CasesRemoteDataSource {
-  final Dio dio;
+  final ApiClient apiClient;
 
-  CasesRemoteDataSourceImpl({required this.dio});
+  CasesRemoteDataSourceImpl({required this.apiClient});
 
   @override
-  Future<List<CaseModel>> getCases() async {
-    await Future.delayed(const Duration(seconds: 1));
-    return _mockData;
+  Future<List<CaseModel>> getCases({required int page, required int limit}) async {
+    final response = await apiClient.get(
+      '/cases',
+      queryParameters: {
+        'page': page,
+        'limit': limit,
+      },
+    );
+    final List data = response.data['items'];
+    return data.map((json) => CaseModel.fromJson(json)).toList();
   }
 
   @override
-  Future<List<CaseModel>> searchCases(String query) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    final q = query.toLowerCase();
-    return _mockData.where((element) => 
-      element.patientName.toLowerCase().contains(q) || 
-      element.symptoms.toLowerCase().contains(q)
-    ).toList();
+  Future<CaseModel> getCaseById(String id) async {
+    final response = await apiClient.get('/cases/$id');
+    return CaseModel.fromJson(response.data);
   }
 
   @override
-  Future<List<CaseModel>> filterCases(DateTime? startDate, DateTime? endDate) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    return _mockData;
+  Future<void> createCase(CreateCaseRequestModel request) async {
+    await apiClient.post('/cases', data: request.toJson());
   }
-
-  List<CaseModel> get _mockData => [
-    CaseModel(
-      id: 'case_001', 
-      patientName: 'Rahul Sharma', 
-      age: 34, 
-      symptoms: 'Chronic back pain, Stiffness', 
-      diagnosisSummary: 'Vata Aggravation. Prescribed Ashwagandha and Kati Basti.', 
-      createdAt: DateTime.now().subtract(const Duration(days: 1))
-    ),
-    CaseModel(
-      id: 'case_002', 
-      patientName: 'Priya Desai', 
-      age: 28, 
-      symptoms: 'Indigestion, Acidity, Headache', 
-      diagnosisSummary: 'Pitta Imbalance. Dietary changes and Amla recommended.', 
-      createdAt: DateTime.now().subtract(const Duration(days: 3))
-    ),
-    CaseModel(
-      id: 'case_003', 
-      patientName: 'Anil Kapoor', 
-      age: 45, 
-      symptoms: 'Joint pain, Lethargy, Weight gain', 
-      diagnosisSummary: 'Kapha Accumulation. Triphala and warm water fasting advised.', 
-      createdAt: DateTime.now().subtract(const Duration(days: 8))
-    ),
-    CaseModel(
-      id: 'case_004', 
-      patientName: 'Sanjay Kumar', 
-      age: 52, 
-      symptoms: 'Insomnia, Stress, Muscle Twitches', 
-      diagnosisSummary: 'Vata-Pitta Imbalance. Meditation and Brahmi prescribed.', 
-      createdAt: DateTime.now().subtract(const Duration(days: 12))
-    ),
-    CaseModel(
-      id: 'case_005', 
-      patientName: 'Meera Patel', 
-      age: 31, 
-      symptoms: 'Dry skin, Constipation', 
-      diagnosisSummary: 'High Vata DOSHA. Oil massages and Ghee recommended.', 
-      createdAt: DateTime.now().subtract(const Duration(days: 15))
-    ),
-    CaseModel(
-      id: 'case_006', 
-      patientName: 'Vikram Singh', 
-      age: 60, 
-      symptoms: 'Knee pain, Swelling', 
-      diagnosisSummary: 'Vata-Kapha aggravation. Janu Basti treatment assigned.', 
-      createdAt: DateTime.now().subtract(const Duration(days: 21))
-    ),
-  ];
 }

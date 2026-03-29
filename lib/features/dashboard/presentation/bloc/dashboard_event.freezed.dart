@@ -55,11 +55,11 @@ extension DashboardEventPatterns on DashboardEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _LoadDashboardData value)?  loadDashboardData,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadStats value)?  loadStats,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _LoadDashboardData() when loadDashboardData != null:
-return loadDashboardData(_that);case _:
+case LoadStats() when loadStats != null:
+return loadStats(_that);case _:
   return orElse();
 
 }
@@ -77,11 +77,11 @@ return loadDashboardData(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _LoadDashboardData value)  loadDashboardData,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadStats value)  loadStats,}){
 final _that = this;
 switch (_that) {
-case _LoadDashboardData():
-return loadDashboardData(_that);case _:
+case LoadStats():
+return loadStats(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -98,11 +98,11 @@ return loadDashboardData(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _LoadDashboardData value)?  loadDashboardData,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadStats value)?  loadStats,}){
 final _that = this;
 switch (_that) {
-case _LoadDashboardData() when loadDashboardData != null:
-return loadDashboardData(_that);case _:
+case LoadStats() when loadStats != null:
+return loadStats(_that);case _:
   return null;
 
 }
@@ -119,10 +119,10 @@ return loadDashboardData(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadDashboardData,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadStats,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _LoadDashboardData() when loadDashboardData != null:
-return loadDashboardData();case _:
+case LoadStats() when loadStats != null:
+return loadStats();case _:
   return orElse();
 
 }
@@ -140,10 +140,10 @@ return loadDashboardData();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadDashboardData,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadStats,}) {final _that = this;
 switch (_that) {
-case _LoadDashboardData():
-return loadDashboardData();case _:
+case LoadStats():
+return loadStats();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -160,10 +160,10 @@ return loadDashboardData();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadDashboardData,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadStats,}) {final _that = this;
 switch (_that) {
-case _LoadDashboardData() when loadDashboardData != null:
-return loadDashboardData();case _:
+case LoadStats() when loadStats != null:
+return loadStats();case _:
   return null;
 
 }
@@ -174,8 +174,8 @@ return loadDashboardData();case _:
 /// @nodoc
 
 
-class _LoadDashboardData implements DashboardEvent {
-  const _LoadDashboardData();
+class LoadStats implements DashboardEvent {
+  const LoadStats();
   
 
 
@@ -185,7 +185,7 @@ class _LoadDashboardData implements DashboardEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadDashboardData);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadStats);
 }
 
 
@@ -194,7 +194,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DashboardEvent.loadDashboardData()';
+  return 'DashboardEvent.loadStats()';
 }
 
 

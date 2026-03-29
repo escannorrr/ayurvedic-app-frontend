@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vaidyaai/l10n/app_localizations.dart';
+import 'package:vaidyaai/core/utils/ui_utils.dart';
+import 'package:vaidyaai/core/theme/app_colors.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
@@ -30,17 +32,14 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state.errorMessage != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.errorMessage!),
-              backgroundColor: Theme.of(context).colorScheme.error,
-            ),
-          );
-        }
-        if (state.isSuccess) {
-          context.go('/dashboard');
-        }
+        state.maybeWhen(
+          error: (message) => UIUtils.showError(context, message),
+          authenticated: (_) {
+            UIUtils.showSuccess(context, 'Login Successful');
+            context.go('/dashboard');
+          },
+          orElse: () {},
+        );
       },
       builder: (context, state) {
         final l10n = AppLocalizations.of(context)!;
@@ -54,7 +53,6 @@ class _LoginFormState extends State<LoginForm> {
                 label: l10n.professionalEmail,
                 hint: l10n.emailHint,
                 prefixIcon: Icons.mail_outline,
-                onChanged: (val) => context.read<AuthBloc>().add(AuthEvent.emailChanged(val)),
               ),
               const SizedBox(height: 24),
               AuthTextField(
@@ -65,7 +63,6 @@ class _LoginFormState extends State<LoginForm> {
                 isPassword: true,
                 actionLabel: l10n.forgotAccess,
                 onActionTap: () {},
-                onChanged: (val) => context.read<AuthBloc>().add(AuthEvent.passwordChanged(val)),
               ),
               const SizedBox(height: 32),
               
@@ -82,18 +79,79 @@ class _LoginFormState extends State<LoginForm> {
               ),
               const SizedBox(height: 16),
               
-              ElevatedButton.icon(
-                onPressed: state.isLoading ? null : () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    context.read<AuthBloc>().add(const AuthEvent.loginSubmitted());
-                  }
-                },
-                icon: state.isLoading 
-                    ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-                    : const SizedBox.shrink(),
-                label: Text(state.isLoading ? l10n.consulting : l10n.startConsulting),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 56),
+              // Premium Login Button
+              Container(
+                width: double.infinity,
+                height: 64,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      AppColors.primary,           // Sage
+                      AppColors.primaryContainer,  // Darker Sage
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.3),
+                      blurRadius: 15,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onHover: (hovering) {
+                      // Handled by default Material splash, but adds interactivity
+                    },
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: state.maybeWhen(
+                      loading: () => null,
+                      orElse: () => () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          context.read<AuthBloc>().add(AuthEvent.loginRequested(
+                                _emailController.text,
+                                _passwordController.text,
+                              ));
+                        }
+                      },
+                    ),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (state.maybeWhen(loading: () => true, orElse: () => false))
+                            const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
+                          else
+                            const Icon(Icons.auto_awesome, color: Colors.white, size: 20),
+                          const SizedBox(width: 12),
+                          Text(
+                            state.maybeWhen(
+                              loading: () => l10n.consulting,
+                              orElse: () => l10n.startConsulting,
+                            ),
+                            style: const TextStyle(
+                              fontFamily: 'Manrope',
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16,
+                              color: Colors.white,
+                              letterSpacing: -0.2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

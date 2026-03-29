@@ -1,5 +1,5 @@
-import 'package:dio/dio.dart';
-import '../models/case_details_model.dart';
+import 'package:vaidyaai/core/api/api_client.dart';
+import 'package:vaidyaai/features/cases/data/models/case_details_model.dart';
 
 abstract class CaseDetailsRemoteDataSource {
   Future<CaseDetailsModel> getCaseDetails(String id);
@@ -7,9 +7,9 @@ abstract class CaseDetailsRemoteDataSource {
 }
 
 class CaseDetailsRemoteDataSourceImpl implements CaseDetailsRemoteDataSource {
-  final Dio dio;
+  final ApiClient apiClient;
 
-  CaseDetailsRemoteDataSourceImpl({required this.dio});
+  CaseDetailsRemoteDataSourceImpl({required this.apiClient});
 
   @override
   Future<CaseDetailsModel> getCaseDetails(String id) async {
@@ -58,7 +58,6 @@ class CaseDetailsRemoteDataSourceImpl implements CaseDetailsRemoteDataSource {
 
   @override
   Future<void> updateCaseNotes(String id, String notes) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    // Mock update success
+    await apiClient.post('/cases/$id/notes', data: {'notes': notes});
   }
 }

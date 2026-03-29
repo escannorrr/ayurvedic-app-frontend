@@ -6,7 +6,7 @@ class GetCases {
 
   GetCases(this.repository);
 
-  Future<List<CaseEntity>> call() async {
-    return await repository.getCases();
+  Future<List<CaseEntity>> call({required int page, required int limit}) async {
+    return await repository.getCases(page: page, limit: limit);
   }
 }

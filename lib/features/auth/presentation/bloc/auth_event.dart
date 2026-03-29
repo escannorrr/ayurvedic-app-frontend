@@ -4,7 +4,7 @@ part 'auth_event.freezed.dart';
 
 @freezed
 abstract class AuthEvent with _$AuthEvent {
-  const factory AuthEvent.emailChanged(String email) = _EmailChanged;
-  const factory AuthEvent.passwordChanged(String password) = _PasswordChanged;
-  const factory AuthEvent.loginSubmitted() = _LoginSubmitted;
+  const factory AuthEvent.appStarted() = AppStarted;
+  const factory AuthEvent.loginRequested(String email, String password) = LoginRequested;
+  const factory AuthEvent.logoutRequested() = LogoutRequested;
 }

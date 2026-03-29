@@ -4,27 +4,40 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // Core
 import '../localization/locale_cubit.dart';
+import '../services/storage_service.dart';
+import '../services/secure_storage_service.dart';
+import '../api/api_client.dart';
+import '../constants/app_constants.dart';
 
 // Auth
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/domain/usecases/login_usecase.dart';
-import '../../features/auth/domain/usecases/signup_usecase.dart';
+import '../../features/auth/domain/usecases/login_usecase.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/data/datasources/auth_remote_data_source.dart';
 
 // Cases
-import '../../features/cases/presentation/bloc/saved_cases_bloc.dart';
+import '../../features/cases/presentation/bloc/cases_bloc.dart';
+import '../../features/cases/presentation/bloc/create_case_bloc.dart';
 import '../../features/cases/presentation/bloc/case_details_bloc.dart';
 import '../../features/cases/domain/usecases/get_cases.dart';
-import '../../features/cases/domain/usecases/search_cases.dart';
-import '../../features/cases/domain/usecases/filter_cases.dart';
+import '../../features/cases/domain/usecases/create_case.dart';
 import '../../features/cases/domain/usecases/get_case_details.dart';
 import '../../features/cases/domain/usecases/update_case_notes.dart';
 import '../../features/cases/domain/repositories/cases_repository.dart';
 import '../../features/cases/data/repositories/cases_repository_impl.dart';
 import '../../features/cases/data/datasources/cases_remote_data_source.dart';
 import '../../features/cases/data/datasources/case_details_remote_data_source.dart';
+
+// Dashboard
+import '../../features/dashboard/presentation/bloc/dashboard_bloc.dart';
+import '../../features/dashboard/presentation/bloc/dashboard_event.dart';
+import '../../features/dashboard/presentation/bloc/dashboard_state.dart';
+import '../../features/dashboard/data/datasources/dashboard_remote_data_source.dart';
+
+// Consultation
+import '../../features/consultation/presentation/bloc/consultation_bloc.dart';
 
 // Settings
 import '../../features/settings/data/datasources/settings_local_data_source.dart';
@@ -45,27 +58,39 @@ Future<void> init() async {
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
+  sl.registerLazySingleton<StorageService>(() => SecureStorageServiceImpl());
+  sl.registerLazySingleton(() => ApiClient(
+    baseUrl: AppConstants.apiBaseUrl,
+    storageService: sl(),
+  ));
   sl.registerLazySingleton(() => Dio());
 
   // Core
   sl.registerLazySingleton(() => LocaleCubit(sharedPreferences: sl()));
 
   // Features - Auth
-  sl.registerFactory(() => AuthBloc(loginUseCase: sl()));
+  sl.registerLazySingleton(() => AuthBloc(
+    loginUseCase: sl(),
+    authRepository: sl(),
+    apiClient: sl(),
+  ));
   sl.registerLazySingleton(() => LoginUseCase(sl()));
-  sl.registerLazySingleton(() => SignupUseCase(sl()));
   sl.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(remoteDataSource: sl()),
+    () => AuthRepositoryImpl(
+      remoteDataSource: sl(),
+      storageService: sl(),
+    ),
   );
   sl.registerLazySingleton<AuthRemoteDataSource>(
-    () => AuthRemoteDataSourceImpl(dio: sl()),
+    () => AuthRemoteDataSourceImpl(apiClient: sl()),
   );
 
   // Features - Cases
-  sl.registerFactory(() => SavedCasesBloc(
+  sl.registerFactory(() => CasesBloc(
     getCases: sl(),
-    searchCases: sl(),
-    filterCases: sl(),
+  ));
+  sl.registerFactory(() => CreateCaseBloc(
+    createCaseUseCase: sl(),
   ));
   sl.registerFactory(() => CaseDetailsBloc(
     getCaseDetails: sl(),
@@ -73,24 +98,27 @@ Future<void> init() async {
   ));
 
   sl.registerLazySingleton(() => GetCases(sl()));
-  sl.registerLazySingleton(() => SearchCases(sl()));
-  sl.registerLazySingleton(() => FilterCases(sl()));
+  sl.registerLazySingleton(() => CreateCaseUseCase(sl()));
   sl.registerLazySingleton(() => GetCaseDetails(sl()));
   sl.registerLazySingleton(() => UpdateCaseNotes(sl()));
 
   sl.registerLazySingleton<CasesRepository>(
     () => CasesRepositoryImpl(
       remoteDataSource: sl(),
-      detailsRemoteDataSource: sl(),
     ),
   );
-
   sl.registerLazySingleton<CasesRemoteDataSource>(
-    () => CasesRemoteDataSourceImpl(dio: sl()),
+    () => CasesRemoteDataSourceImpl(apiClient: sl()),
   );
-  sl.registerLazySingleton<CaseDetailsRemoteDataSource>(
-    () => CaseDetailsRemoteDataSourceImpl(dio: sl()),
+
+  // Features - Dashboard
+  sl.registerFactory(() => DashboardFeatureBloc(dataSource: sl()));
+  sl.registerLazySingleton<DashboardRemoteDataSource>(
+    () => DashboardRemoteDataSourceImpl(apiClient: sl()),
   );
+
+  // Features - Consultation
+  sl.registerFactory(() => ConsultationBloc());
 
   // Features - Settings
   sl.registerFactory(() => SettingsBloc(
@@ -105,7 +133,10 @@ Future<void> init() async {
   sl.registerLazySingleton(() => Logout(sl()));
 
   sl.registerLazySingleton<SettingsRepository>(
-    () => SettingsRepositoryImpl(localDataSource: sl()),
+    () => SettingsRepositoryImpl(
+      localDataSource: sl(),
+      storageService: sl(),
+    ),
   );
   sl.registerLazySingleton<SettingsLocalDataSource>(
     () => SettingsLocalDataSourceImpl(sharedPreferences: sl()),

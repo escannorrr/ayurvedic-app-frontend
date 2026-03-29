@@ -1,4 +1,4 @@
-import '../../domain/entities/case_details_entity.dart';
+import 'package:vaidyaai/features/cases/domain/entities/case_details_entity.dart';
 
 class CaseDetailsModel {
   final String id;
@@ -15,22 +15,13 @@ class CaseDetailsModel {
 
   factory CaseDetailsModel.fromJson(Map<String, dynamic> json) {
     return CaseDetailsModel(
-      id: json['id'] as String,
-      patientInfo: PatientInfoModel.fromJson(json['patientInfo'] as Map<String, dynamic>),
-      consultations: (json['consultations'] as List)
-          .map((e) => ConsultationModel.fromJson(e as Map<String, dynamic>))
+      id: json['id'] ?? '',
+      patientInfo: PatientInfoModel.fromJson(json['patient_info'] ?? {}),
+      consultations: (json['consultations'] as List? ?? [])
+          .map((e) => ConsultationModel.fromJson(e))
           .toList(),
-      notes: json['notes'] as String,
+      notes: json['notes'] ?? '',
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'patientInfo': patientInfo.toJson(),
-      'consultations': consultations.map((e) => e.toJson()).toList(),
-      'notes': notes,
-    };
   }
 
   CaseDetailsEntity toEntity() {
@@ -64,26 +55,14 @@ class PatientInfoModel {
 
   factory PatientInfoModel.fromJson(Map<String, dynamic> json) {
     return PatientInfoModel(
-      name: json['name'] as String,
-      avatarUrl: json['avatarUrl'] as String,
-      age: json['age'] as String,
-      gender: json['gender'] as String,
-      dosha: json['dosha'] as String,
-      lastVisit: DateTime.parse(json['lastVisit'] as String),
-      status: json['status'] as String,
+      name: json['name'] ?? '',
+      avatarUrl: json['avatar_url'] ?? '',
+      age: json['age'] ?? '',
+      gender: json['gender'] ?? '',
+      dosha: json['dosha'] ?? '',
+      lastVisit: DateTime.parse(json['last_visit'] ?? DateTime.now().toIso8601String()),
+      status: json['status'] ?? '',
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'avatarUrl': avatarUrl,
-      'age': age,
-      'gender': gender,
-      'dosha': dosha,
-      'lastVisit': lastVisit.toIso8601String(),
-      'status': status,
-    };
   }
 
   PatientInfo toEntity() {
@@ -118,24 +97,13 @@ class ConsultationModel {
 
   factory ConsultationModel.fromJson(Map<String, dynamic> json) {
     return ConsultationModel(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      summary: json['summary'] as String,
-      date: DateTime.parse(json['date'] as String),
-      type: json['type'] as String,
-      tags: List<String>.from(json['tags'] as List),
+      id: json['id'] ?? '',
+      title: json['title'] ?? '',
+      summary: json['summary'] ?? '',
+      date: DateTime.parse(json['date'] ?? DateTime.now().toIso8601String()),
+      type: json['type'] ?? '',
+      tags: List<String>.from(json['tags'] ?? []),
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'summary': summary,
-      'date': date.toIso8601String(),
-      'type': type,
-      'tags': tags,
-    };
   }
 
   ConsultationEntity toEntity() {

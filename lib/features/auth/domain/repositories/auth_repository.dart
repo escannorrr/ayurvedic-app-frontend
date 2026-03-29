@@ -1,6 +1,8 @@
-import '../entities/user_entity.dart';
+import 'package:vaidyaai/features/auth/domain/entities/user_entity.dart';
 
 abstract class AuthRepository {
-  Future<UserEntity> login({required String email, required String password});
-  Future<UserEntity> signup({required String email, required String password});
+  Future<UserEntity> login(String email, String password);
+  Future<void> logout();
+  Future<String?> getToken();
+  Future<UserEntity?> getCurrentUser();
 }

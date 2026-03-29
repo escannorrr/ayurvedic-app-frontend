@@ -6,13 +6,46 @@ import 'package:vaidyaai/features/consultation/presentation/bloc/consultation_bl
 import 'package:vaidyaai/features/consultation/presentation/bloc/consultation_event.dart';
 import 'package:vaidyaai/features/consultation/presentation/bloc/consultation_state.dart';
 import 'package:vaidyaai/core/utils/screen_size.dart';
+import 'package:vaidyaai/features/ai_diagnosis/presentation/widgets/ai_diagnosis_dialog.dart';
+import 'package:vaidyaai/features/ai_diagnosis/presentation/bloc/ai_diagnosis_bloc.dart';
+import 'package:vaidyaai/features/ai_diagnosis/presentation/bloc/ai_diagnosis_event.dart';
+import 'package:vaidyaai/features/ai_diagnosis/domain/usecases/generate_ai_diagnosis.dart';
+import 'package:vaidyaai/features/ai_diagnosis/data/repositories/ai_repository_impl.dart';
+import 'package:vaidyaai/features/ai_diagnosis/data/datasources/ai_remote_data_source.dart';
+import 'package:vaidyaai/features/cases/presentation/bloc/create_case_bloc.dart';
+import 'package:vaidyaai/features/cases/presentation/bloc/create_case_event.dart';
+import 'package:vaidyaai/features/cases/presentation/bloc/create_case_state.dart';
+import 'package:vaidyaai/features/cases/domain/usecases/create_case.dart';
+import 'package:vaidyaai/features/cases/data/repositories/cases_repository_impl.dart';
+import 'package:vaidyaai/features/cases/data/datasources/cases_remote_data_source.dart';
+import 'package:vaidyaai/features/cases/domain/entities/case_entity.dart';
+import 'package:vaidyaai/core/api/api_client.dart';
+import 'package:vaidyaai/core/di/injection_container.dart' as di;
 
-class PatientFormSection extends StatelessWidget {
+class PatientFormSection extends StatefulWidget {
   const PatientFormSection({super.key});
 
   @override
+  State<PatientFormSection> createState() => _PatientFormSectionState();
+}
+
+class _PatientFormSectionState extends State<PatientFormSection> {
+  final TextEditingController _symptomController = TextEditingController();
+
+  @override
+  void dispose() {
+    _symptomController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ConsultationBloc, ConsultationState>(
+    return BlocConsumer<ConsultationBloc, ConsultationState>(
+      listener: (context, state) {
+        if (state.symptomInput.isEmpty && _symptomController.text.isNotEmpty) {
+          _symptomController.clear();
+        }
+      },
       builder: (context, state) {
         final l10n = AppLocalizations.of(context)!;
         
@@ -61,13 +94,17 @@ class PatientFormSection extends StatelessWidget {
                       child: DropdownButtonFormField<String>(
                         isExpanded: true,
                         iconSize: 20,
-                        value: 'Female',
+                        value: state.gender,
                         items: [
                           DropdownMenuItem(value: 'Male', child: Text(l10n.male, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13))),
                           DropdownMenuItem(value: 'Female', child: Text(l10n.female, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13))),
                           DropdownMenuItem(value: 'Other', child: Text(l10n.other, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13))),
                         ],
-                        onChanged: (v) {},
+                        onChanged: (v) {
+                          if (v != null) {
+                            context.read<ConsultationBloc>().add(ConsultationEvent.genderChanged(v));
+                          }
+                        },
                         decoration: InputDecoration(
                           filled: true,
                           isDense: true,
@@ -119,13 +156,17 @@ class PatientFormSection extends StatelessWidget {
                         child: DropdownButtonFormField<String>(
                           isExpanded: true,
                           iconSize: 20,
-                          value: 'Female',
+                          value: state.gender,
                           items: [
                             DropdownMenuItem(value: 'Male', child: Text(l10n.male, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13))),
                             DropdownMenuItem(value: 'Female', child: Text(l10n.female, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13))),
                             DropdownMenuItem(value: 'Other', child: Text(l10n.other, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13))),
                           ],
-                          onChanged: (v) {},
+                          onChanged: (v) {
+                            if (v != null) {
+                              context.read<ConsultationBloc>().add(ConsultationEvent.genderChanged(v));
+                            }
+                          },
                           decoration: InputDecoration(
                             filled: true,
                             isDense: true,
@@ -141,26 +182,59 @@ class PatientFormSection extends StatelessWidget {
               const SizedBox(height: 32),
               _FieldWrap(
                 label: l10n.symptomsChecklist,
-                child: Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ...state.activeSymptoms.map((s) => _SymptomChip(
-                      label: s,
-                      isActive: true,
-                      onTap: () => context.read<ConsultationBloc>().add(ConsultationEvent.symptomToggled(s, false)),
-                    )),
-                    ...state.availableSymptoms.map((s) => _SymptomChip(
-                      label: s,
-                      isActive: false,
-                      onTap: () => context.read<ConsultationBloc>().add(ConsultationEvent.symptomToggled(s, true)),
-                    )),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _symptomController,
+                            onChanged: (v) => context.read<ConsultationBloc>().add(ConsultationEvent.symptomInputChanged(v)),
+                            onSubmitted: (_) => context.read<ConsultationBloc>().add(const ConsultationEvent.addSymptom()),
+                            decoration: InputDecoration(
+                              hintText: 'Enter symptom (e.g. Fever)',
+                              filled: true,
+                              fillColor: AppColors.surfaceContainerLowest,
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+                              prefixIcon: const Icon(Icons.search_rounded, size: 20),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        IconButton.filled(
+                          onPressed: state.symptomInput.trim().isEmpty ? null : () {
+                            context.read<ConsultationBloc>().add(const ConsultationEvent.addSymptom());
+                          },
+                          icon: const Icon(Icons.add_rounded),
+                          style: IconButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            padding: const EdgeInsets.all(16),
+                          ),
+                        ),
+                      ],
+                    ),
+                    if (state.activeSymptoms.isNotEmpty) ...[
+                      const SizedBox(height: 16),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: state.activeSymptoms.map((s) => _SymptomChip(
+                          label: s,
+                          isActive: true,
+                          onTap: () => context.read<ConsultationBloc>().add(ConsultationEvent.removeSymptom(s)),
+                        )).toList(),
+                      ),
+                    ],
                   ],
-                )
+                ),
               ),
               const SizedBox(height: 16),
               TextField(
                 maxLines: 4,
+                onChanged: (v) => context.read<ConsultationBloc>().add(ConsultationEvent.symptomsDescriptionChanged(v)),
                 decoration: InputDecoration(
                   hintText: l10n.describeSymptoms,
                   filled: true,
@@ -208,17 +282,113 @@ class PatientFormSection extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 32),
-              ElevatedButton.icon(
-                onPressed: state.isLoading ? null : () => context.read<ConsultationBloc>().add(const ConsultationEvent.generateDiagnosis()),
-                icon: state.isLoading 
-                  ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-                  : const Icon(Icons.auto_awesome),
-                label: Text(state.isLoading ? l10n.consulting : l10n.generateAiDiagnosis),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 64),
-                  textStyle: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                ),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final bool isNarrow = constraints.maxWidth < 600;
+                  final List<Widget> buttons = [
+                    Expanded(
+                      flex: isNarrow ? 0 : 1,
+                      child: ElevatedButton.icon(
+                        onPressed: (state.isLoading || (state.activeSymptoms.isEmpty && state.symptomsDescription.trim().isEmpty)) ? null : () async {
+                          final aiRemoteDataSource = AiRemoteDataSourceImpl(apiClient: di.sl<ApiClient>());
+                          final aiRepository = AiRepositoryImpl(remoteDataSource: aiRemoteDataSource);
+                          final generateAiDiagnosisUsecase = GenerateAiDiagnosis(repository: aiRepository);
+                          final aiDiagnosisBloc = AiDiagnosisBloc(generateAiDiagnosis: generateAiDiagnosisUsecase);
+
+                          aiDiagnosisBloc.add(GenerateAiDiagnosisEvent(
+                            symptoms: state.activeSymptoms,
+                            query: state.symptomsDescription.trim().isEmpty ? null : state.symptomsDescription.trim(),
+                            durationDays: state.duration.toInt() * 7,
+                            prakriti: state.prakriti.toLowerCase(),
+                            age: int.tryParse(state.age) ?? 28,
+                            gender: state.gender.toLowerCase(),
+                          ));
+
+                          final result = await AiDiagnosisDialog.show(
+                            context,
+                            symptoms: state.activeSymptoms,
+                            patientInfo: {
+                              'query': state.symptomsDescription,
+                              'age': state.age,
+                              'prakriti': state.prakriti,
+                              'duration': '${state.duration.toInt()} weeks',
+                              'gender': state.gender,
+                            },
+                            bloc: aiDiagnosisBloc,
+                          );
+
+                          if (result != null && context.mounted) {
+                            context.read<ConsultationBloc>().add(ConsultationEvent.aiDiagnosisSettled(result));
+                          }
+                        },
+                        icon: state.isLoading 
+                          ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                          : const Icon(Icons.auto_awesome),
+                        label: Text(state.isLoading ? l10n.consulting : l10n.generateAiDiagnosis),
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 64),
+                          textStyle: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, fontSize: 16),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: isNarrow ? 0 : 16, height: isNarrow ? 12 : 0),
+                    Expanded(
+                      flex: isNarrow ? 0 : 1,
+                      child: ElevatedButton.icon(
+                        onPressed: (state.patientName.trim().isEmpty || (state.activeSymptoms.isEmpty && state.symptomsDescription.trim().isEmpty)) ? null : () async {
+                          final casesRemoteDataSource = CasesRemoteDataSourceImpl(apiClient: di.sl<ApiClient>());
+                          final casesRepository = CasesRepositoryImpl(remoteDataSource: casesRemoteDataSource);
+                          final createCaseUseCase = CreateCaseUseCase(casesRepository);
+                          final createCaseBloc = CreateCaseBloc(createCaseUseCase: createCaseUseCase);
+
+                          final caseEntity = CaseEntity(
+                            id: DateTime.now().millisecondsSinceEpoch.toString(),
+                            patientName: state.patientName,
+                            age: int.tryParse(state.age) ?? 0,
+                            gender: state.gender,
+                            symptoms: state.activeSymptoms,
+                            duration: '${state.duration.toInt()} weeks',
+                            notes: state.symptomsDescription,
+                            aiAnalysis: state.aiDiagnosis?.toMap(),
+                            createdAt: DateTime.now(),
+                            diagnosis: state.aiDiagnosis?.diagnosisName ?? (state.symptomsDescription.isNotEmpty ? state.symptomsDescription : state.activeSymptoms.join(', ')),
+                          );
+
+                          final scaffoldMessenger = ScaffoldMessenger.of(context);
+                          createCaseBloc.stream.listen((blocState) {
+                             if (blocState is CreateCaseSuccess) {
+                               scaffoldMessenger.showSnackBar(
+                                 const SnackBar(content: Text('Case created successfully'), backgroundColor: Colors.green),
+                               );
+                             } else if (blocState is CreateCaseError) {
+                               scaffoldMessenger.showSnackBar(
+                                 SnackBar(content: Text('Error: ${blocState.message}'), backgroundColor: Colors.red),
+                               );
+                             }
+                          });
+
+                          createCaseBloc.add(CreateCaseEvent.submitCase(caseEntity));
+                        },
+                        icon: const Icon(Icons.add_task),
+                        label: const Text('Create Case'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: Colors.white,
+                          disabledBackgroundColor: AppColors.outline.withValues(alpha: 0.1),
+                          disabledForegroundColor: AppColors.outline.withValues(alpha: 0.5),
+                          minimumSize: const Size(double.infinity, 64),
+                          textStyle: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, fontSize: 16),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
+                      ),
+                    ),
+                  ];
+
+                  return isNarrow 
+                    ? Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: buttons)
+                    : Row(children: buttons);
+                },
               )
             ],
           )

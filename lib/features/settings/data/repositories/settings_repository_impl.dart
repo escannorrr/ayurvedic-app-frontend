@@ -3,15 +3,36 @@ import '../../domain/repositories/settings_repository.dart';
 import '../datasources/settings_local_data_source.dart';
 import '../models/settings_model.dart';
 
+import '../../../../core/services/storage_service.dart';
+
 class SettingsRepositoryImpl implements SettingsRepository {
   final SettingsLocalDataSource localDataSource;
+  final StorageService storageService;
 
-  SettingsRepositoryImpl({required this.localDataSource});
+  SettingsRepositoryImpl({
+    required this.localDataSource,
+    required this.storageService,
+  });
 
   @override
   Future<SettingsEntity> getSettings() async {
     final model = await localDataSource.getSettings();
-    return model.toEntity();
+    final name = await storageService.read('user_name');
+    final email = await storageService.read('user_email');
+
+    final entity = model.toEntity();
+    
+    // Override profile with real user data if available
+    if (name != null && name.isNotEmpty) {
+      return entity.copyWith(
+        profile: entity.profile.copyWith(
+          name: name,
+          email: email ?? entity.profile.email,
+        ),
+      );
+    }
+    
+    return entity;
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:vaidyaai/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/case_details_entity.dart';
@@ -45,11 +46,17 @@ class PatientInfoCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppColors.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(16),
-                  image: DecorationImage(
-                    image: NetworkImage(patientInfo.avatarUrl),
-                    fit: BoxFit.cover,
-                  ),
                 ),
+                child: patientInfo.avatarUrl.isNotEmpty
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Image.network(
+                          patientInfo.avatarUrl,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
+                        ),
+                      )
+                    : _buildPlaceholder(),
               ),
               const SizedBox(width: 32),
               Expanded(
@@ -87,12 +94,18 @@ class PatientInfoCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _DetailItem(label: l10n.ageGenderLabel, value: '${patientInfo.age} / ${patientInfo.gender}'),
+                        _DetailItem(
+                          label: l10n.ageGenderLabel, 
+                          value: '${patientInfo.age == "0" ? "N/A" : patientInfo.age} / ${patientInfo.gender}'
+                        ),
                         _DetailItem(label: l10n.doshaConstitution, value: patientInfo.dosha, valueColor: AppColors.primary),
-                        _DetailItem(label: l10n.lastVisit, value: 'Oct 12, 2023'), // Localize if needed
+                        _DetailItem(
+                          label: l10n.lastVisit, 
+                          value: DateFormat('MMM dd, yyyy').format(patientInfo.lastVisit)
+                        ),
                         _DetailItem(
                           label: l10n.currentStatus,
-                          value: patientInfo.status,
+                          value: patientInfo.status.toUpperCase(),
                           isStatus: true,
                         ),
                       ],
@@ -104,6 +117,12 @@ class PatientInfoCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildPlaceholder() {
+    return const Center(
+      child: Icon(Icons.person, size: 48, color: AppColors.outline),
     );
   }
 }

@@ -1,19 +1,24 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:vaidyaai/features/ai_diagnosis/domain/entities/ai_diagnosis_entity.dart';
 
 part 'consultation_state.freezed.dart';
 
 @freezed
 abstract class ConsultationState with _$ConsultationState {
   const factory ConsultationState({
-    @Default('') String name,
+    @Default('') String patientName,
     @Default('') String age,
-    @Default(2.0) double duration,
+    @Default([]) List<String> activeSymptoms,
+    @Default('') String symptomInput,
+    @Default('') String symptomsDescription,
+    @Default(1.0) double duration,
     @Default('Vata') String prakriti,
-    @Default(['Indigestion', 'Insomnia']) List<String> activeSymptoms,
-    @Default(['Joint Pain', 'Fatigue', 'Anxiety', 'Acidity']) List<String> availableSymptoms,
+    @Default('Female') String gender,
     @Default(false) bool isLoading,
-    Map<String, dynamic>? diagnosisResult,
     String? errorMessage,
+    Map<String, dynamic>? diagnosisResult,
+    AiDiagnosisEntity? aiDiagnosis,
+    bool? success,
   }) = _ConsultationState;
 
   factory ConsultationState.initial() => const ConsultationState();

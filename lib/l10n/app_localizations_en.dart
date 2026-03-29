@@ -18,7 +18,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get professionalEmail => 'Professional Email';
 
   @override
-  String get emailHint => 'john.doe@ayulife.com';
+  String get emailHint => 'practitioner@vaidya.ai';
 
   @override
   String get password => 'Password';
@@ -195,7 +195,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lifestyleTweaks => 'Lifestyle Tweaks';
 
   @override
-  String get namasteDoctor => 'Namaste, Dr. Ananya';
+  String namasteDoctor(Object name) {
+    return 'Namaste, Dr. $name';
+  }
 
   @override
   String get todayBeautiful =>
@@ -573,16 +575,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailId => 'Email ID';
 
   @override
-  String get firstNameHint => 'John';
+  String get firstNameHint => 'First Name';
 
   @override
-  String get lastNameHint => 'Doe';
+  String get lastNameHint => 'Last Name';
 
   @override
-  String get mobileHint => '+91 98765 43210';
+  String get mobileHint => 'Mobile Number';
 
   @override
-  String get clinicHint => 'AyuLife Wellness';
+  String get clinicHint => 'Clinic Name';
 
   @override
   String get languagePreferences => 'Language Preferences';
@@ -636,4 +638,43 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingsDescription =>
       'Manage your apothecary preferences and account security.';
+
+  @override
+  String get analyzingSymptoms => 'Analyzing symptoms...';
+
+  @override
+  String get aiDiagnosisResult => 'AI Diagnosis Result';
+
+  @override
+  String get diagnosisSummary => 'Diagnosis Summary';
+
+  @override
+  String get possibleConditions => 'Possible Conditions';
+
+  @override
+  String get suggestedRemedies => 'Suggested Remedies';
+
+  @override
+  String get acceptDiagnosis => 'Accept Diagnosis';
+
+  @override
+  String get modifyDiagnosis => 'Modify Diagnosis';
+
+  @override
+  String get overrideDiagnosis => 'Override Diagnosis';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get aiDiagnosisSubtitle => 'Digital Apothecary Insight';
+
+  @override
+  String get doshaAnalysis => 'Dosha Analysis';
+
+  @override
+  String get curatingAyurvedicWisdom => 'Curating Ayurvedic wisdom...';
+
+  @override
+  String get modifyDoshaImpact => 'Modify Dosha Impact';
 }

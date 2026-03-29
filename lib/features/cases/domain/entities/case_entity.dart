@@ -1,17 +1,27 @@
-class CaseEntity {
-  final String id;
-  final String patientName;
-  final int age;
-  final String symptoms;
-  final String diagnosisSummary;
-  final DateTime createdAt;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  const CaseEntity({
-    required this.id,
-    required this.patientName,
-    required this.age,
-    required this.symptoms,
-    required this.diagnosisSummary,
-    required this.createdAt,
-  });
+part 'case_entity.freezed.dart';
+
+@freezed
+abstract class CaseEntity with _$CaseEntity {
+  const CaseEntity._();
+
+  const factory CaseEntity({
+    required String id,
+    @Default('') String caseIdentifier,
+    required String patientName,
+    @Default(0) int age,
+    @Default('Unknown') String gender,
+    @Default('Unknown') String location,
+    @Default([]) List<String> symptoms,
+    @Default('') String duration,
+    @Default('') String notes,
+    Map<String, dynamic>? aiAnalysis,
+    Map<String, dynamic>? doctorInput,
+    @Default('draft') String status,
+    required DateTime createdAt,
+    @Default('') String diagnosis,
+  }) = _CaseEntity;
+
+  String get diagnosisSummary => diagnosis.isNotEmpty ? diagnosis : 'No Diagnosis';
 }

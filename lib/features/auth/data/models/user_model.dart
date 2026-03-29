@@ -1,42 +1,48 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../domain/entities/user_entity.dart';
-import '../../../settings/domain/entities/user_profile_entity.dart';
+import 'package:vaidyaai/features/auth/domain/entities/user_entity.dart';
 
-part 'user_model.freezed.dart';
-part 'user_model.g.dart';
+class UserModel {
+  final String id;
+  final String email;
+  final String? fullName;
+  final String? accessToken;
 
-@freezed
-abstract class UserModel with _$UserModel {
-  const factory UserModel({
-    required String id,
-    required String email,
-    String? name,
-    String? lastName,
-    String? mobile,
-    required String token,
-    @Default('AyuCare Wellness Center') String clinicName,
-    @Default('Ayurvedic Specialist') String specialty,
-    @Default('') String avatarUrl,
-  }) = _UserModel;
+  UserModel({
+    required this.id,
+    required this.email,
+    this.fullName,
+    this.accessToken,
+  });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
-}
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    // Handle both flat response (from signup) and wrapped response (from login)
+    final userData = json['user'] ?? json;
+    return UserModel(
+      id: userData['id']?.toString() ?? '',
+      email: userData['email'] ?? '',
+      fullName: userData['full_name'],
+      accessToken: json['access_token'],
+    );
+  }
 
-extension UserModelX on UserModel {
-  UserEntity toEntity() => UserEntity(
-    id: id,
-    email: email,
-    name: name,
-    token: token,
-  );
+  UserEntity toEntity() {
+    return UserEntity(
+      id: id,
+      email: email,
+      fullName: fullName,
+    );
+  }
 
-  UserProfileEntity toUserProfileEntity() => UserProfileEntity(
-    name: name ?? '',
-    lastName: lastName ?? '',
-    email: email,
-    mobile: mobile ?? '',
-    clinicName: clinicName,
-    specialty: specialty,
-    avatarUrl: avatarUrl,
-  );
+  UserModel copyWith({
+    String? id,
+    String? email,
+    String? fullName,
+    String? accessToken,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      fullName: fullName ?? this.fullName,
+      accessToken: accessToken ?? this.accessToken,
+    );
+  }
 }

@@ -55,13 +55,13 @@ extension DashboardStatePatterns on DashboardState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Success value)?  success,TResult Function( _Error value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( DashboardInitial value)?  initial,TResult Function( DashboardLoading value)?  loading,TResult Function( DashboardLoaded value)?  loaded,TResult Function( DashboardError value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Success() when success != null:
-return success(_that);case _Error() when error != null:
+case DashboardInitial() when initial != null:
+return initial(_that);case DashboardLoading() when loading != null:
+return loading(_that);case DashboardLoaded() when loaded != null:
+return loaded(_that);case DashboardError() when error != null:
 return error(_that);case _:
   return orElse();
 
@@ -80,13 +80,13 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Success value)  success,required TResult Function( _Error value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( DashboardInitial value)  initial,required TResult Function( DashboardLoading value)  loading,required TResult Function( DashboardLoaded value)  loaded,required TResult Function( DashboardError value)  error,}){
 final _that = this;
 switch (_that) {
-case _Initial():
-return initial(_that);case _Loading():
-return loading(_that);case _Success():
-return success(_that);case _Error():
+case DashboardInitial():
+return initial(_that);case DashboardLoading():
+return loading(_that);case DashboardLoaded():
+return loaded(_that);case DashboardError():
 return error(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -104,13 +104,13 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Success value)?  success,TResult? Function( _Error value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( DashboardInitial value)?  initial,TResult? Function( DashboardLoading value)?  loading,TResult? Function( DashboardLoaded value)?  loaded,TResult? Function( DashboardError value)?  error,}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Success() when success != null:
-return success(_that);case _Error() when error != null:
+case DashboardInitial() when initial != null:
+return initial(_that);case DashboardLoading() when loading != null:
+return loading(_that);case DashboardLoaded() when loaded != null:
+return loaded(_that);case DashboardError() when error != null:
 return error(_that);case _:
   return null;
 
@@ -128,12 +128,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( int patientsToday,  int aiConsultations,  int savedCases,  List<Map<String, String>> recentCases)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( DashboardStats stats)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Success() when success != null:
-return success(_that.patientsToday,_that.aiConsultations,_that.savedCases,_that.recentCases);case _Error() when error != null:
+case DashboardInitial() when initial != null:
+return initial();case DashboardLoading() when loading != null:
+return loading();case DashboardLoaded() when loaded != null:
+return loaded(_that.stats);case DashboardError() when error != null:
 return error(_that.message);case _:
   return orElse();
 
@@ -152,12 +152,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( int patientsToday,  int aiConsultations,  int savedCases,  List<Map<String, String>> recentCases)  success,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( DashboardStats stats)  loaded,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
-case _Initial():
-return initial();case _Loading():
-return loading();case _Success():
-return success(_that.patientsToday,_that.aiConsultations,_that.savedCases,_that.recentCases);case _Error():
+case DashboardInitial():
+return initial();case DashboardLoading():
+return loading();case DashboardLoaded():
+return loaded(_that.stats);case DashboardError():
 return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -175,12 +175,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( int patientsToday,  int aiConsultations,  int savedCases,  List<Map<String, String>> recentCases)?  success,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( DashboardStats stats)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Success() when success != null:
-return success(_that.patientsToday,_that.aiConsultations,_that.savedCases,_that.recentCases);case _Error() when error != null:
+case DashboardInitial() when initial != null:
+return initial();case DashboardLoading() when loading != null:
+return loading();case DashboardLoaded() when loaded != null:
+return loaded(_that.stats);case DashboardError() when error != null:
 return error(_that.message);case _:
   return null;
 
@@ -192,8 +192,8 @@ return error(_that.message);case _:
 /// @nodoc
 
 
-class _Initial implements DashboardState {
-  const _Initial();
+class DashboardInitial implements DashboardState {
+  const DashboardInitial();
   
 
 
@@ -203,7 +203,7 @@ class _Initial implements DashboardState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DashboardInitial);
 }
 
 
@@ -224,8 +224,8 @@ String toString() {
 /// @nodoc
 
 
-class _Loading implements DashboardState {
-  const _Loading();
+class DashboardLoading implements DashboardState {
+  const DashboardLoading();
   
 
 
@@ -235,7 +235,7 @@ class _Loading implements DashboardState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DashboardLoading);
 }
 
 
@@ -256,86 +256,83 @@ String toString() {
 /// @nodoc
 
 
-class _Success implements DashboardState {
-  const _Success({required this.patientsToday, required this.aiConsultations, required this.savedCases, required final  List<Map<String, String>> recentCases}): _recentCases = recentCases;
+class DashboardLoaded implements DashboardState {
+  const DashboardLoaded(this.stats);
   
 
- final  int patientsToday;
- final  int aiConsultations;
- final  int savedCases;
- final  List<Map<String, String>> _recentCases;
- List<Map<String, String>> get recentCases {
-  if (_recentCases is EqualUnmodifiableListView) return _recentCases;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_recentCases);
-}
-
+ final  DashboardStats stats;
 
 /// Create a copy of DashboardState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(this, _$identity);
+$DashboardLoadedCopyWith<DashboardLoaded> get copyWith => _$DashboardLoadedCopyWithImpl<DashboardLoaded>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&(identical(other.patientsToday, patientsToday) || other.patientsToday == patientsToday)&&(identical(other.aiConsultations, aiConsultations) || other.aiConsultations == aiConsultations)&&(identical(other.savedCases, savedCases) || other.savedCases == savedCases)&&const DeepCollectionEquality().equals(other._recentCases, _recentCases));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DashboardLoaded&&(identical(other.stats, stats) || other.stats == stats));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,patientsToday,aiConsultations,savedCases,const DeepCollectionEquality().hash(_recentCases));
+int get hashCode => Object.hash(runtimeType,stats);
 
 @override
 String toString() {
-  return 'DashboardState.success(patientsToday: $patientsToday, aiConsultations: $aiConsultations, savedCases: $savedCases, recentCases: $recentCases)';
+  return 'DashboardState.loaded(stats: $stats)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SuccessCopyWith<$Res> implements $DashboardStateCopyWith<$Res> {
-  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
+abstract mixin class $DashboardLoadedCopyWith<$Res> implements $DashboardStateCopyWith<$Res> {
+  factory $DashboardLoadedCopyWith(DashboardLoaded value, $Res Function(DashboardLoaded) _then) = _$DashboardLoadedCopyWithImpl;
 @useResult
 $Res call({
- int patientsToday, int aiConsultations, int savedCases, List<Map<String, String>> recentCases
+ DashboardStats stats
 });
 
 
-
+$DashboardStatsCopyWith<$Res> get stats;
 
 }
 /// @nodoc
-class __$SuccessCopyWithImpl<$Res>
-    implements _$SuccessCopyWith<$Res> {
-  __$SuccessCopyWithImpl(this._self, this._then);
+class _$DashboardLoadedCopyWithImpl<$Res>
+    implements $DashboardLoadedCopyWith<$Res> {
+  _$DashboardLoadedCopyWithImpl(this._self, this._then);
 
-  final _Success _self;
-  final $Res Function(_Success) _then;
+  final DashboardLoaded _self;
+  final $Res Function(DashboardLoaded) _then;
 
 /// Create a copy of DashboardState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? patientsToday = null,Object? aiConsultations = null,Object? savedCases = null,Object? recentCases = null,}) {
-  return _then(_Success(
-patientsToday: null == patientsToday ? _self.patientsToday : patientsToday // ignore: cast_nullable_to_non_nullable
-as int,aiConsultations: null == aiConsultations ? _self.aiConsultations : aiConsultations // ignore: cast_nullable_to_non_nullable
-as int,savedCases: null == savedCases ? _self.savedCases : savedCases // ignore: cast_nullable_to_non_nullable
-as int,recentCases: null == recentCases ? _self._recentCases : recentCases // ignore: cast_nullable_to_non_nullable
-as List<Map<String, String>>,
+@pragma('vm:prefer-inline') $Res call({Object? stats = null,}) {
+  return _then(DashboardLoaded(
+null == stats ? _self.stats : stats // ignore: cast_nullable_to_non_nullable
+as DashboardStats,
   ));
 }
 
-
+/// Create a copy of DashboardState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$DashboardStatsCopyWith<$Res> get stats {
+  
+  return $DashboardStatsCopyWith<$Res>(_self.stats, (value) {
+    return _then(_self.copyWith(stats: value));
+  });
+}
 }
 
 /// @nodoc
 
 
-class _Error implements DashboardState {
-  const _Error(this.message);
+class DashboardError implements DashboardState {
+  const DashboardError(this.message);
   
 
  final  String message;
@@ -344,13 +341,13 @@ class _Error implements DashboardState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
+$DashboardErrorCopyWith<DashboardError> get copyWith => _$DashboardErrorCopyWithImpl<DashboardError>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DashboardError&&(identical(other.message, message) || other.message == message));
 }
 
 
@@ -366,8 +363,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res> implements $DashboardStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
+abstract mixin class $DashboardErrorCopyWith<$Res> implements $DashboardStateCopyWith<$Res> {
+  factory $DashboardErrorCopyWith(DashboardError value, $Res Function(DashboardError) _then) = _$DashboardErrorCopyWithImpl;
 @useResult
 $Res call({
  String message
@@ -378,17 +375,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(this._self, this._then);
+class _$DashboardErrorCopyWithImpl<$Res>
+    implements $DashboardErrorCopyWith<$Res> {
+  _$DashboardErrorCopyWithImpl(this._self, this._then);
 
-  final _Error _self;
-  final $Res Function(_Error) _then;
+  final DashboardError _self;
+  final $Res Function(DashboardError) _then;
 
 /// Create a copy of DashboardState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
-  return _then(_Error(
+  return _then(DashboardError(
 null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
   ));

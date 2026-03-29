@@ -1,30 +1,58 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/usecases/login_usecase.dart';
+import 'package:vaidyaai/features/auth/domain/usecases/login_usecase.dart';
+import 'package:vaidyaai/features/auth/domain/repositories/auth_repository.dart';
+import 'package:vaidyaai/core/api/api_client.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
+import 'dart:async';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
+  final AuthRepository authRepository;
+  final ApiClient apiClient;
+  StreamSubscription? _authSubscription;
 
-  AuthBloc({required this.loginUseCase}) : super(AuthState.initial()) {
-    on<AuthEvent>((event, emit) async {
-      await event.when(
-        emailChanged: (email) async {
-          emit(state.copyWith(email: email, errorMessage: null));
-        },
-        passwordChanged: (password) async {
-          emit(state.copyWith(password: password, errorMessage: null));
-        },
-        loginSubmitted: () async {
-          emit(state.copyWith(isLoading: true, errorMessage: null, isSuccess: false));
-          try {
-            await loginUseCase(email: state.email, password: state.password);
-            emit(state.copyWith(isLoading: false, isSuccess: true));
-          } catch (error) {
-            emit(state.copyWith(isLoading: false, errorMessage: error.toString()));
-          }
-        },
-      );
+  AuthBloc({
+    required this.loginUseCase,
+    required this.authRepository,
+    required this.apiClient,
+  }) : super(const AuthInitial()) {
+    
+    // Listen for 401 traps from interceptor
+    _authSubscription = apiClient.authInterceptor.onUnauthorized.listen((_) {
+      add(const LogoutRequested());
     });
+
+    on<AppStarted>((event, emit) async {
+      emit(const AuthLoading());
+      final user = await authRepository.getCurrentUser();
+      if (user != null) {
+        emit(Authenticated(user));
+      } else {
+        emit(const Unauthenticated());
+      }
+    });
+
+    on<LoginRequested>((event, emit) async {
+      emit(const AuthLoading());
+      try {
+        final user = await loginUseCase(event.email, event.password);
+        emit(Authenticated(user));
+      } catch (e) {
+        emit(AuthError(e.toString()));
+      }
+    });
+
+    on<LogoutRequested>((event, emit) async {
+      emit(const AuthLoading());
+      await authRepository.logout();
+      emit(const Unauthenticated());
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _authSubscription?.cancel();
+    return super.close();
   }
 }

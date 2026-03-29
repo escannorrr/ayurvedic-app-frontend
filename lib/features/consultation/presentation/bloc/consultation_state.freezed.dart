@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ConsultationState {
 
- String get name; String get age; double get duration; String get prakriti; List<String> get activeSymptoms; List<String> get availableSymptoms; bool get isLoading; Map<String, dynamic>? get diagnosisResult; String? get errorMessage;
+ String get patientName; String get age; List<String> get activeSymptoms; String get symptomInput; String get symptomsDescription; double get duration; String get prakriti; String get gender; bool get isLoading; String? get errorMessage; Map<String, dynamic>? get diagnosisResult; AiDiagnosisEntity? get aiDiagnosis; bool? get success;
 /// Create a copy of ConsultationState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ConsultationStateCopyWith<ConsultationState> get copyWith => _$ConsultationStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ConsultationState&&(identical(other.name, name) || other.name == name)&&(identical(other.age, age) || other.age == age)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.prakriti, prakriti) || other.prakriti == prakriti)&&const DeepCollectionEquality().equals(other.activeSymptoms, activeSymptoms)&&const DeepCollectionEquality().equals(other.availableSymptoms, availableSymptoms)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&const DeepCollectionEquality().equals(other.diagnosisResult, diagnosisResult)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ConsultationState&&(identical(other.patientName, patientName) || other.patientName == patientName)&&(identical(other.age, age) || other.age == age)&&const DeepCollectionEquality().equals(other.activeSymptoms, activeSymptoms)&&(identical(other.symptomInput, symptomInput) || other.symptomInput == symptomInput)&&(identical(other.symptomsDescription, symptomsDescription) || other.symptomsDescription == symptomsDescription)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.prakriti, prakriti) || other.prakriti == prakriti)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&const DeepCollectionEquality().equals(other.diagnosisResult, diagnosisResult)&&(identical(other.aiDiagnosis, aiDiagnosis) || other.aiDiagnosis == aiDiagnosis)&&(identical(other.success, success) || other.success == success));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,age,duration,prakriti,const DeepCollectionEquality().hash(activeSymptoms),const DeepCollectionEquality().hash(availableSymptoms),isLoading,const DeepCollectionEquality().hash(diagnosisResult),errorMessage);
+int get hashCode => Object.hash(runtimeType,patientName,age,const DeepCollectionEquality().hash(activeSymptoms),symptomInput,symptomsDescription,duration,prakriti,gender,isLoading,errorMessage,const DeepCollectionEquality().hash(diagnosisResult),aiDiagnosis,success);
 
 @override
 String toString() {
-  return 'ConsultationState(name: $name, age: $age, duration: $duration, prakriti: $prakriti, activeSymptoms: $activeSymptoms, availableSymptoms: $availableSymptoms, isLoading: $isLoading, diagnosisResult: $diagnosisResult, errorMessage: $errorMessage)';
+  return 'ConsultationState(patientName: $patientName, age: $age, activeSymptoms: $activeSymptoms, symptomInput: $symptomInput, symptomsDescription: $symptomsDescription, duration: $duration, prakriti: $prakriti, gender: $gender, isLoading: $isLoading, errorMessage: $errorMessage, diagnosisResult: $diagnosisResult, aiDiagnosis: $aiDiagnosis, success: $success)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ConsultationStateCopyWith<$Res>  {
   factory $ConsultationStateCopyWith(ConsultationState value, $Res Function(ConsultationState) _then) = _$ConsultationStateCopyWithImpl;
 @useResult
 $Res call({
- String name, String age, double duration, String prakriti, List<String> activeSymptoms, List<String> availableSymptoms, bool isLoading, Map<String, dynamic>? diagnosisResult, String? errorMessage
+ String patientName, String age, List<String> activeSymptoms, String symptomInput, String symptomsDescription, double duration, String prakriti, String gender, bool isLoading, String? errorMessage, Map<String, dynamic>? diagnosisResult, AiDiagnosisEntity? aiDiagnosis, bool? success
 });
 
 
@@ -62,18 +62,22 @@ class _$ConsultationStateCopyWithImpl<$Res>
 
 /// Create a copy of ConsultationState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? age = null,Object? duration = null,Object? prakriti = null,Object? activeSymptoms = null,Object? availableSymptoms = null,Object? isLoading = null,Object? diagnosisResult = freezed,Object? errorMessage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? patientName = null,Object? age = null,Object? activeSymptoms = null,Object? symptomInput = null,Object? symptomsDescription = null,Object? duration = null,Object? prakriti = null,Object? gender = null,Object? isLoading = null,Object? errorMessage = freezed,Object? diagnosisResult = freezed,Object? aiDiagnosis = freezed,Object? success = freezed,}) {
   return _then(_self.copyWith(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+patientName: null == patientName ? _self.patientName : patientName // ignore: cast_nullable_to_non_nullable
 as String,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
+as String,activeSymptoms: null == activeSymptoms ? _self.activeSymptoms : activeSymptoms // ignore: cast_nullable_to_non_nullable
+as List<String>,symptomInput: null == symptomInput ? _self.symptomInput : symptomInput // ignore: cast_nullable_to_non_nullable
+as String,symptomsDescription: null == symptomsDescription ? _self.symptomsDescription : symptomsDescription // ignore: cast_nullable_to_non_nullable
 as String,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
 as double,prakriti: null == prakriti ? _self.prakriti : prakriti // ignore: cast_nullable_to_non_nullable
-as String,activeSymptoms: null == activeSymptoms ? _self.activeSymptoms : activeSymptoms // ignore: cast_nullable_to_non_nullable
-as List<String>,availableSymptoms: null == availableSymptoms ? _self.availableSymptoms : availableSymptoms // ignore: cast_nullable_to_non_nullable
-as List<String>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,diagnosisResult: freezed == diagnosisResult ? _self.diagnosisResult : diagnosisResult // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>?,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
-as String?,
+as String,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String?,diagnosisResult: freezed == diagnosisResult ? _self.diagnosisResult : diagnosisResult // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>?,aiDiagnosis: freezed == aiDiagnosis ? _self.aiDiagnosis : aiDiagnosis // ignore: cast_nullable_to_non_nullable
+as AiDiagnosisEntity?,success: freezed == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 
@@ -158,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String age,  double duration,  String prakriti,  List<String> activeSymptoms,  List<String> availableSymptoms,  bool isLoading,  Map<String, dynamic>? diagnosisResult,  String? errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String patientName,  String age,  List<String> activeSymptoms,  String symptomInput,  String symptomsDescription,  double duration,  String prakriti,  String gender,  bool isLoading,  String? errorMessage,  Map<String, dynamic>? diagnosisResult,  AiDiagnosisEntity? aiDiagnosis,  bool? success)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ConsultationState() when $default != null:
-return $default(_that.name,_that.age,_that.duration,_that.prakriti,_that.activeSymptoms,_that.availableSymptoms,_that.isLoading,_that.diagnosisResult,_that.errorMessage);case _:
+return $default(_that.patientName,_that.age,_that.activeSymptoms,_that.symptomInput,_that.symptomsDescription,_that.duration,_that.prakriti,_that.gender,_that.isLoading,_that.errorMessage,_that.diagnosisResult,_that.aiDiagnosis,_that.success);case _:
   return orElse();
 
 }
@@ -179,10 +183,10 @@ return $default(_that.name,_that.age,_that.duration,_that.prakriti,_that.activeS
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String age,  double duration,  String prakriti,  List<String> activeSymptoms,  List<String> availableSymptoms,  bool isLoading,  Map<String, dynamic>? diagnosisResult,  String? errorMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String patientName,  String age,  List<String> activeSymptoms,  String symptomInput,  String symptomsDescription,  double duration,  String prakriti,  String gender,  bool isLoading,  String? errorMessage,  Map<String, dynamic>? diagnosisResult,  AiDiagnosisEntity? aiDiagnosis,  bool? success)  $default,) {final _that = this;
 switch (_that) {
 case _ConsultationState():
-return $default(_that.name,_that.age,_that.duration,_that.prakriti,_that.activeSymptoms,_that.availableSymptoms,_that.isLoading,_that.diagnosisResult,_that.errorMessage);case _:
+return $default(_that.patientName,_that.age,_that.activeSymptoms,_that.symptomInput,_that.symptomsDescription,_that.duration,_that.prakriti,_that.gender,_that.isLoading,_that.errorMessage,_that.diagnosisResult,_that.aiDiagnosis,_that.success);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +203,10 @@ return $default(_that.name,_that.age,_that.duration,_that.prakriti,_that.activeS
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String age,  double duration,  String prakriti,  List<String> activeSymptoms,  List<String> availableSymptoms,  bool isLoading,  Map<String, dynamic>? diagnosisResult,  String? errorMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String patientName,  String age,  List<String> activeSymptoms,  String symptomInput,  String symptomsDescription,  double duration,  String prakriti,  String gender,  bool isLoading,  String? errorMessage,  Map<String, dynamic>? diagnosisResult,  AiDiagnosisEntity? aiDiagnosis,  bool? success)?  $default,) {final _that = this;
 switch (_that) {
 case _ConsultationState() when $default != null:
-return $default(_that.name,_that.age,_that.duration,_that.prakriti,_that.activeSymptoms,_that.availableSymptoms,_that.isLoading,_that.diagnosisResult,_that.errorMessage);case _:
+return $default(_that.patientName,_that.age,_that.activeSymptoms,_that.symptomInput,_that.symptomsDescription,_that.duration,_that.prakriti,_that.gender,_that.isLoading,_that.errorMessage,_that.diagnosisResult,_that.aiDiagnosis,_that.success);case _:
   return null;
 
 }
@@ -214,13 +218,11 @@ return $default(_that.name,_that.age,_that.duration,_that.prakriti,_that.activeS
 
 
 class _ConsultationState implements ConsultationState {
-  const _ConsultationState({this.name = '', this.age = '', this.duration = 2.0, this.prakriti = 'Vata', final  List<String> activeSymptoms = const ['Indigestion', 'Insomnia'], final  List<String> availableSymptoms = const ['Joint Pain', 'Fatigue', 'Anxiety', 'Acidity'], this.isLoading = false, final  Map<String, dynamic>? diagnosisResult, this.errorMessage}): _activeSymptoms = activeSymptoms,_availableSymptoms = availableSymptoms,_diagnosisResult = diagnosisResult;
+  const _ConsultationState({this.patientName = '', this.age = '', final  List<String> activeSymptoms = const [], this.symptomInput = '', this.symptomsDescription = '', this.duration = 1.0, this.prakriti = 'Vata', this.gender = 'Female', this.isLoading = false, this.errorMessage, final  Map<String, dynamic>? diagnosisResult, this.aiDiagnosis, this.success}): _activeSymptoms = activeSymptoms,_diagnosisResult = diagnosisResult;
   
 
-@override@JsonKey() final  String name;
+@override@JsonKey() final  String patientName;
 @override@JsonKey() final  String age;
-@override@JsonKey() final  double duration;
-@override@JsonKey() final  String prakriti;
  final  List<String> _activeSymptoms;
 @override@JsonKey() List<String> get activeSymptoms {
   if (_activeSymptoms is EqualUnmodifiableListView) return _activeSymptoms;
@@ -228,14 +230,13 @@ class _ConsultationState implements ConsultationState {
   return EqualUnmodifiableListView(_activeSymptoms);
 }
 
- final  List<String> _availableSymptoms;
-@override@JsonKey() List<String> get availableSymptoms {
-  if (_availableSymptoms is EqualUnmodifiableListView) return _availableSymptoms;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_availableSymptoms);
-}
-
+@override@JsonKey() final  String symptomInput;
+@override@JsonKey() final  String symptomsDescription;
+@override@JsonKey() final  double duration;
+@override@JsonKey() final  String prakriti;
+@override@JsonKey() final  String gender;
 @override@JsonKey() final  bool isLoading;
+@override final  String? errorMessage;
  final  Map<String, dynamic>? _diagnosisResult;
 @override Map<String, dynamic>? get diagnosisResult {
   final value = _diagnosisResult;
@@ -245,7 +246,8 @@ class _ConsultationState implements ConsultationState {
   return EqualUnmodifiableMapView(value);
 }
 
-@override final  String? errorMessage;
+@override final  AiDiagnosisEntity? aiDiagnosis;
+@override final  bool? success;
 
 /// Create a copy of ConsultationState
 /// with the given fields replaced by the non-null parameter values.
@@ -257,16 +259,16 @@ _$ConsultationStateCopyWith<_ConsultationState> get copyWith => __$ConsultationS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ConsultationState&&(identical(other.name, name) || other.name == name)&&(identical(other.age, age) || other.age == age)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.prakriti, prakriti) || other.prakriti == prakriti)&&const DeepCollectionEquality().equals(other._activeSymptoms, _activeSymptoms)&&const DeepCollectionEquality().equals(other._availableSymptoms, _availableSymptoms)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&const DeepCollectionEquality().equals(other._diagnosisResult, _diagnosisResult)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ConsultationState&&(identical(other.patientName, patientName) || other.patientName == patientName)&&(identical(other.age, age) || other.age == age)&&const DeepCollectionEquality().equals(other._activeSymptoms, _activeSymptoms)&&(identical(other.symptomInput, symptomInput) || other.symptomInput == symptomInput)&&(identical(other.symptomsDescription, symptomsDescription) || other.symptomsDescription == symptomsDescription)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.prakriti, prakriti) || other.prakriti == prakriti)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&const DeepCollectionEquality().equals(other._diagnosisResult, _diagnosisResult)&&(identical(other.aiDiagnosis, aiDiagnosis) || other.aiDiagnosis == aiDiagnosis)&&(identical(other.success, success) || other.success == success));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,age,duration,prakriti,const DeepCollectionEquality().hash(_activeSymptoms),const DeepCollectionEquality().hash(_availableSymptoms),isLoading,const DeepCollectionEquality().hash(_diagnosisResult),errorMessage);
+int get hashCode => Object.hash(runtimeType,patientName,age,const DeepCollectionEquality().hash(_activeSymptoms),symptomInput,symptomsDescription,duration,prakriti,gender,isLoading,errorMessage,const DeepCollectionEquality().hash(_diagnosisResult),aiDiagnosis,success);
 
 @override
 String toString() {
-  return 'ConsultationState(name: $name, age: $age, duration: $duration, prakriti: $prakriti, activeSymptoms: $activeSymptoms, availableSymptoms: $availableSymptoms, isLoading: $isLoading, diagnosisResult: $diagnosisResult, errorMessage: $errorMessage)';
+  return 'ConsultationState(patientName: $patientName, age: $age, activeSymptoms: $activeSymptoms, symptomInput: $symptomInput, symptomsDescription: $symptomsDescription, duration: $duration, prakriti: $prakriti, gender: $gender, isLoading: $isLoading, errorMessage: $errorMessage, diagnosisResult: $diagnosisResult, aiDiagnosis: $aiDiagnosis, success: $success)';
 }
 
 
@@ -277,7 +279,7 @@ abstract mixin class _$ConsultationStateCopyWith<$Res> implements $ConsultationS
   factory _$ConsultationStateCopyWith(_ConsultationState value, $Res Function(_ConsultationState) _then) = __$ConsultationStateCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String age, double duration, String prakriti, List<String> activeSymptoms, List<String> availableSymptoms, bool isLoading, Map<String, dynamic>? diagnosisResult, String? errorMessage
+ String patientName, String age, List<String> activeSymptoms, String symptomInput, String symptomsDescription, double duration, String prakriti, String gender, bool isLoading, String? errorMessage, Map<String, dynamic>? diagnosisResult, AiDiagnosisEntity? aiDiagnosis, bool? success
 });
 
 
@@ -294,18 +296,22 @@ class __$ConsultationStateCopyWithImpl<$Res>
 
 /// Create a copy of ConsultationState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? age = null,Object? duration = null,Object? prakriti = null,Object? activeSymptoms = null,Object? availableSymptoms = null,Object? isLoading = null,Object? diagnosisResult = freezed,Object? errorMessage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? patientName = null,Object? age = null,Object? activeSymptoms = null,Object? symptomInput = null,Object? symptomsDescription = null,Object? duration = null,Object? prakriti = null,Object? gender = null,Object? isLoading = null,Object? errorMessage = freezed,Object? diagnosisResult = freezed,Object? aiDiagnosis = freezed,Object? success = freezed,}) {
   return _then(_ConsultationState(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+patientName: null == patientName ? _self.patientName : patientName // ignore: cast_nullable_to_non_nullable
 as String,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
+as String,activeSymptoms: null == activeSymptoms ? _self._activeSymptoms : activeSymptoms // ignore: cast_nullable_to_non_nullable
+as List<String>,symptomInput: null == symptomInput ? _self.symptomInput : symptomInput // ignore: cast_nullable_to_non_nullable
+as String,symptomsDescription: null == symptomsDescription ? _self.symptomsDescription : symptomsDescription // ignore: cast_nullable_to_non_nullable
 as String,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
 as double,prakriti: null == prakriti ? _self.prakriti : prakriti // ignore: cast_nullable_to_non_nullable
-as String,activeSymptoms: null == activeSymptoms ? _self._activeSymptoms : activeSymptoms // ignore: cast_nullable_to_non_nullable
-as List<String>,availableSymptoms: null == availableSymptoms ? _self._availableSymptoms : availableSymptoms // ignore: cast_nullable_to_non_nullable
-as List<String>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,diagnosisResult: freezed == diagnosisResult ? _self._diagnosisResult : diagnosisResult // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>?,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
-as String?,
+as String,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String?,diagnosisResult: freezed == diagnosisResult ? _self._diagnosisResult : diagnosisResult // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>?,aiDiagnosis: freezed == aiDiagnosis ? _self.aiDiagnosis : aiDiagnosis // ignore: cast_nullable_to_non_nullable
+as AiDiagnosisEntity?,success: freezed == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 

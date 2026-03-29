@@ -60,7 +60,7 @@
   "primaryImbalance": "प्राथमिक असंतुलन",
   "recommendedHerbs": "अनुशंसित जड़ी-बूटियाँ",
   "lifestyleTweaks": "जीवनशैली में बदलाव",
-  "namasteDoctor": "नमस्ते, डॉ. अनन्या",
+  "namasteDoctor": "नमस्ते, डॉ. {name}",
   "todayBeautiful": "आज इलाज के लिए एक सुंदर दिन है। आपके 12 अपॉइंटमेंट निर्धारित हैं।",
   "uploadCase": "केस अपलोड करें",
   "johnDoe": "जॉन डो",

@@ -121,7 +121,7 @@ abstract class AppLocalizations {
   /// No description provided for @emailHint.
   ///
   /// In en, this message translates to:
-  /// **'john.doe@ayulife.com'**
+  /// **'practitioner@vaidya.ai'**
   String get emailHint;
 
   /// No description provided for @password.
@@ -469,8 +469,8 @@ abstract class AppLocalizations {
   /// No description provided for @namasteDoctor.
   ///
   /// In en, this message translates to:
-  /// **'Namaste, Dr. Ananya'**
-  String get namasteDoctor;
+  /// **'Namaste, Dr. {name}'**
+  String namasteDoctor(Object name);
 
   /// No description provided for @todayBeautiful.
   ///
@@ -1177,25 +1177,25 @@ abstract class AppLocalizations {
   /// No description provided for @firstNameHint.
   ///
   /// In en, this message translates to:
-  /// **'John'**
+  /// **'First Name'**
   String get firstNameHint;
 
   /// No description provided for @lastNameHint.
   ///
   /// In en, this message translates to:
-  /// **'Doe'**
+  /// **'Last Name'**
   String get lastNameHint;
 
   /// No description provided for @mobileHint.
   ///
   /// In en, this message translates to:
-  /// **'+91 98765 43210'**
+  /// **'Mobile Number'**
   String get mobileHint;
 
   /// No description provided for @clinicHint.
   ///
   /// In en, this message translates to:
-  /// **'AyuLife Wellness'**
+  /// **'Clinic Name'**
   String get clinicHint;
 
   /// No description provided for @languagePreferences.
@@ -1293,6 +1293,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Manage your apothecary preferences and account security.'**
   String get settingsDescription;
+
+  /// No description provided for @analyzingSymptoms.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing symptoms...'**
+  String get analyzingSymptoms;
+
+  /// No description provided for @aiDiagnosisResult.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Diagnosis Result'**
+  String get aiDiagnosisResult;
+
+  /// No description provided for @diagnosisSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnosis Summary'**
+  String get diagnosisSummary;
+
+  /// No description provided for @possibleConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Possible Conditions'**
+  String get possibleConditions;
+
+  /// No description provided for @suggestedRemedies.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested Remedies'**
+  String get suggestedRemedies;
+
+  /// No description provided for @acceptDiagnosis.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept Diagnosis'**
+  String get acceptDiagnosis;
+
+  /// No description provided for @modifyDiagnosis.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify Diagnosis'**
+  String get modifyDiagnosis;
+
+  /// No description provided for @overrideDiagnosis.
+  ///
+  /// In en, this message translates to:
+  /// **'Override Diagnosis'**
+  String get overrideDiagnosis;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @aiDiagnosisSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Digital Apothecary Insight'**
+  String get aiDiagnosisSubtitle;
+
+  /// No description provided for @doshaAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Dosha Analysis'**
+  String get doshaAnalysis;
+
+  /// No description provided for @curatingAyurvedicWisdom.
+  ///
+  /// In en, this message translates to:
+  /// **'Curating Ayurvedic wisdom...'**
+  String get curatingAyurvedicWisdom;
+
+  /// No description provided for @modifyDoshaImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify Dosha Impact'**
+  String get modifyDoshaImpact;
 }
 
 class _AppLocalizationsDelegate

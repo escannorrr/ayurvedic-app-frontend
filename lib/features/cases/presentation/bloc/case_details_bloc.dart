@@ -8,7 +8,6 @@ import 'case_details_state.dart';
 class CaseDetailsBloc extends Bloc<CaseDetailsEvent, CaseDetailsState> {
   final GetCaseDetails getCaseDetails;
   final UpdateCaseNotes updateCaseNotes;
-  
   Timer? _notesDebounce;
 
   CaseDetailsBloc({
@@ -29,7 +28,6 @@ class CaseDetailsBloc extends Bloc<CaseDetailsEvent, CaseDetailsState> {
         updateNotes: (caseId, notes) async {
           if (state.caseDetails == null) return;
           
-          // Optimistically update the local state notes
           final updatedDetails = state.caseDetails!.copyWith(notes: notes);
           emit(state.copyWith(caseDetails: updatedDetails));
           

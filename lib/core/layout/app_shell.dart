@@ -6,10 +6,14 @@ import '../theme/app_colors.dart';
 import '../../features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import '../../features/dashboard/presentation/bloc/dashboard_event.dart';
 import '../../features/consultation/presentation/bloc/consultation_bloc.dart';
-import '../../features/cases/presentation/bloc/saved_cases_bloc.dart';
+import '../../features/cases/presentation/bloc/cases_bloc.dart';
+import '../../features/cases/presentation/bloc/cases_event.dart';
 import '../../features/settings/presentation/bloc/settings_bloc.dart';
+import '../../features/auth/presentation/bloc/auth_bloc.dart';
+import '../../features/auth/presentation/bloc/auth_state.dart';
 import '../../core/di/injection_container.dart';
 import '../utils/screen_size.dart';
+import '../theme/app_colors.dart';
 
 class AppShell extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -22,14 +26,14 @@ class AppShell extends StatelessWidget {
     
     return MultiBlocProvider(
       providers: [
-        BlocProvider<DashboardBloc>(
-          create: (context) => DashboardBloc()..add(const DashboardEvent.loadDashboardData())
+        BlocProvider<DashboardFeatureBloc>(
+          create: (context) => DashboardFeatureBloc(dataSource: sl())..add(const LoadStats())
         ),
         BlocProvider<ConsultationBloc>(
           create: (context) => ConsultationBloc()
         ),
-        BlocProvider<SavedCasesBloc>(
-          create: (context) => sl<SavedCasesBloc>()
+        BlocProvider<CasesBloc>(
+          create: (context) => CasesBloc(getCases: sl())..add(const LoadCases(1))
         ),
         BlocProvider<SettingsBloc>(
           create: (context) => sl<SettingsBloc>()
@@ -154,7 +158,7 @@ class _AppSidebar extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: _SidebarItem(
-              icon: Icons.settings_outlined, 
+              icon: Icons.settings_rounded, 
               label: l10n.settings, 
               isActive: currentIndex == 3,
               onTap: () => _onItemTapped(3, context, '/settings'),
@@ -229,31 +233,40 @@ class _FloatingHeader extends StatelessWidget {
           Container(width: 1, height: 24, color: AppColors.outlineVariant.withValues(alpha: 0.2)),
           const SizedBox(width: 16),
           if (!isMobile)
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  l10n.doctorName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.onSurface,
-                      ),
-                ),
-                Text(
-                  l10n.ayurvedicSpecialist,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.outline,
-                        letterSpacing: 1.5,
-                      ),
-                ),
-              ],
+            BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                final String doctorName = state.maybeWhen(
+                  authenticated: (user) => user.fullName ?? l10n.doctorName,
+                  orElse: () => l10n.doctorName,
+                );
+                
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      doctorName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.onSurface,
+                          ),
+                    ),
+                    Text(
+                      l10n.ayurvedicSpecialist,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.outline,
+                            letterSpacing: 1.5,
+                          ),
+                    ),
+                  ],
+                );
+              },
             ),
           const SizedBox(width: 12),
           const CircleAvatar(

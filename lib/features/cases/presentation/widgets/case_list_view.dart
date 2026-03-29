@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vaidyaai/l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/case_entity.dart';
 
@@ -257,7 +258,7 @@ class _DateText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Oct 24, 2023', // Static for design matching or use DateFormat
+      DateFormat('MMM dd, yyyy').format(date),
       style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: 14),
     );
   }

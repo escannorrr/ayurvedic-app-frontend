@@ -87,8 +87,8 @@ class _SettingsSkeletonState extends State<SettingsSkeleton> with SingleTickerPr
   Widget _ShimmerCard({required double height}) {
     return Container(
       width: double.infinity,
-      height: height,
       padding: const EdgeInsets.all(32),
+      constraints: BoxConstraints(minHeight: height),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(24),

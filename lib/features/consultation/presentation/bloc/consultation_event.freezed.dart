@@ -55,16 +55,21 @@ extension ConsultationEventPatterns on ConsultationEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _NameChanged value)?  nameChanged,TResult Function( _AgeChanged value)?  ageChanged,TResult Function( _DurationChanged value)?  durationChanged,TResult Function( _PrakritiChanged value)?  prakritiChanged,TResult Function( _SymptomToggled value)?  symptomToggled,TResult Function( _GenerateDiagnosis value)?  generateDiagnosis,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( NameChanged value)?  nameChanged,TResult Function( AgeChanged value)?  ageChanged,TResult Function( SymptomInputChanged value)?  symptomInputChanged,TResult Function( AddSymptom value)?  addSymptom,TResult Function( RemoveSymptom value)?  removeSymptom,TResult Function( SymptomsDescriptionChanged value)?  symptomsDescriptionChanged,TResult Function( DurationChanged value)?  durationChanged,TResult Function( PrakritiChanged value)?  prakritiChanged,TResult Function( GenderChanged value)?  genderChanged,TResult Function( GenerateDiagnosis value)?  generateDiagnosis,TResult Function( AiDiagnosisSettled value)?  aiDiagnosisSettled,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _NameChanged() when nameChanged != null:
-return nameChanged(_that);case _AgeChanged() when ageChanged != null:
-return ageChanged(_that);case _DurationChanged() when durationChanged != null:
-return durationChanged(_that);case _PrakritiChanged() when prakritiChanged != null:
-return prakritiChanged(_that);case _SymptomToggled() when symptomToggled != null:
-return symptomToggled(_that);case _GenerateDiagnosis() when generateDiagnosis != null:
-return generateDiagnosis(_that);case _:
+case NameChanged() when nameChanged != null:
+return nameChanged(_that);case AgeChanged() when ageChanged != null:
+return ageChanged(_that);case SymptomInputChanged() when symptomInputChanged != null:
+return symptomInputChanged(_that);case AddSymptom() when addSymptom != null:
+return addSymptom(_that);case RemoveSymptom() when removeSymptom != null:
+return removeSymptom(_that);case SymptomsDescriptionChanged() when symptomsDescriptionChanged != null:
+return symptomsDescriptionChanged(_that);case DurationChanged() when durationChanged != null:
+return durationChanged(_that);case PrakritiChanged() when prakritiChanged != null:
+return prakritiChanged(_that);case GenderChanged() when genderChanged != null:
+return genderChanged(_that);case GenerateDiagnosis() when generateDiagnosis != null:
+return generateDiagnosis(_that);case AiDiagnosisSettled() when aiDiagnosisSettled != null:
+return aiDiagnosisSettled(_that);case _:
   return orElse();
 
 }
@@ -82,16 +87,21 @@ return generateDiagnosis(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _NameChanged value)  nameChanged,required TResult Function( _AgeChanged value)  ageChanged,required TResult Function( _DurationChanged value)  durationChanged,required TResult Function( _PrakritiChanged value)  prakritiChanged,required TResult Function( _SymptomToggled value)  symptomToggled,required TResult Function( _GenerateDiagnosis value)  generateDiagnosis,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( NameChanged value)  nameChanged,required TResult Function( AgeChanged value)  ageChanged,required TResult Function( SymptomInputChanged value)  symptomInputChanged,required TResult Function( AddSymptom value)  addSymptom,required TResult Function( RemoveSymptom value)  removeSymptom,required TResult Function( SymptomsDescriptionChanged value)  symptomsDescriptionChanged,required TResult Function( DurationChanged value)  durationChanged,required TResult Function( PrakritiChanged value)  prakritiChanged,required TResult Function( GenderChanged value)  genderChanged,required TResult Function( GenerateDiagnosis value)  generateDiagnosis,required TResult Function( AiDiagnosisSettled value)  aiDiagnosisSettled,}){
 final _that = this;
 switch (_that) {
-case _NameChanged():
-return nameChanged(_that);case _AgeChanged():
-return ageChanged(_that);case _DurationChanged():
-return durationChanged(_that);case _PrakritiChanged():
-return prakritiChanged(_that);case _SymptomToggled():
-return symptomToggled(_that);case _GenerateDiagnosis():
-return generateDiagnosis(_that);case _:
+case NameChanged():
+return nameChanged(_that);case AgeChanged():
+return ageChanged(_that);case SymptomInputChanged():
+return symptomInputChanged(_that);case AddSymptom():
+return addSymptom(_that);case RemoveSymptom():
+return removeSymptom(_that);case SymptomsDescriptionChanged():
+return symptomsDescriptionChanged(_that);case DurationChanged():
+return durationChanged(_that);case PrakritiChanged():
+return prakritiChanged(_that);case GenderChanged():
+return genderChanged(_that);case GenerateDiagnosis():
+return generateDiagnosis(_that);case AiDiagnosisSettled():
+return aiDiagnosisSettled(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -108,16 +118,21 @@ return generateDiagnosis(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _NameChanged value)?  nameChanged,TResult? Function( _AgeChanged value)?  ageChanged,TResult? Function( _DurationChanged value)?  durationChanged,TResult? Function( _PrakritiChanged value)?  prakritiChanged,TResult? Function( _SymptomToggled value)?  symptomToggled,TResult? Function( _GenerateDiagnosis value)?  generateDiagnosis,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( NameChanged value)?  nameChanged,TResult? Function( AgeChanged value)?  ageChanged,TResult? Function( SymptomInputChanged value)?  symptomInputChanged,TResult? Function( AddSymptom value)?  addSymptom,TResult? Function( RemoveSymptom value)?  removeSymptom,TResult? Function( SymptomsDescriptionChanged value)?  symptomsDescriptionChanged,TResult? Function( DurationChanged value)?  durationChanged,TResult? Function( PrakritiChanged value)?  prakritiChanged,TResult? Function( GenderChanged value)?  genderChanged,TResult? Function( GenerateDiagnosis value)?  generateDiagnosis,TResult? Function( AiDiagnosisSettled value)?  aiDiagnosisSettled,}){
 final _that = this;
 switch (_that) {
-case _NameChanged() when nameChanged != null:
-return nameChanged(_that);case _AgeChanged() when ageChanged != null:
-return ageChanged(_that);case _DurationChanged() when durationChanged != null:
-return durationChanged(_that);case _PrakritiChanged() when prakritiChanged != null:
-return prakritiChanged(_that);case _SymptomToggled() when symptomToggled != null:
-return symptomToggled(_that);case _GenerateDiagnosis() when generateDiagnosis != null:
-return generateDiagnosis(_that);case _:
+case NameChanged() when nameChanged != null:
+return nameChanged(_that);case AgeChanged() when ageChanged != null:
+return ageChanged(_that);case SymptomInputChanged() when symptomInputChanged != null:
+return symptomInputChanged(_that);case AddSymptom() when addSymptom != null:
+return addSymptom(_that);case RemoveSymptom() when removeSymptom != null:
+return removeSymptom(_that);case SymptomsDescriptionChanged() when symptomsDescriptionChanged != null:
+return symptomsDescriptionChanged(_that);case DurationChanged() when durationChanged != null:
+return durationChanged(_that);case PrakritiChanged() when prakritiChanged != null:
+return prakritiChanged(_that);case GenderChanged() when genderChanged != null:
+return genderChanged(_that);case GenerateDiagnosis() when generateDiagnosis != null:
+return generateDiagnosis(_that);case AiDiagnosisSettled() when aiDiagnosisSettled != null:
+return aiDiagnosisSettled(_that);case _:
   return null;
 
 }
@@ -134,15 +149,20 @@ return generateDiagnosis(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String name)?  nameChanged,TResult Function( String age)?  ageChanged,TResult Function( double duration)?  durationChanged,TResult Function( String prakriti)?  prakritiChanged,TResult Function( String symptom,  bool isAdding)?  symptomToggled,TResult Function()?  generateDiagnosis,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String name)?  nameChanged,TResult Function( String age)?  ageChanged,TResult Function( String input)?  symptomInputChanged,TResult Function()?  addSymptom,TResult Function( String symptom)?  removeSymptom,TResult Function( String description)?  symptomsDescriptionChanged,TResult Function( double duration)?  durationChanged,TResult Function( String prakriti)?  prakritiChanged,TResult Function( String gender)?  genderChanged,TResult Function()?  generateDiagnosis,TResult Function( AiDiagnosisEntity diagnosis)?  aiDiagnosisSettled,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _NameChanged() when nameChanged != null:
-return nameChanged(_that.name);case _AgeChanged() when ageChanged != null:
-return ageChanged(_that.age);case _DurationChanged() when durationChanged != null:
-return durationChanged(_that.duration);case _PrakritiChanged() when prakritiChanged != null:
-return prakritiChanged(_that.prakriti);case _SymptomToggled() when symptomToggled != null:
-return symptomToggled(_that.symptom,_that.isAdding);case _GenerateDiagnosis() when generateDiagnosis != null:
-return generateDiagnosis();case _:
+case NameChanged() when nameChanged != null:
+return nameChanged(_that.name);case AgeChanged() when ageChanged != null:
+return ageChanged(_that.age);case SymptomInputChanged() when symptomInputChanged != null:
+return symptomInputChanged(_that.input);case AddSymptom() when addSymptom != null:
+return addSymptom();case RemoveSymptom() when removeSymptom != null:
+return removeSymptom(_that.symptom);case SymptomsDescriptionChanged() when symptomsDescriptionChanged != null:
+return symptomsDescriptionChanged(_that.description);case DurationChanged() when durationChanged != null:
+return durationChanged(_that.duration);case PrakritiChanged() when prakritiChanged != null:
+return prakritiChanged(_that.prakriti);case GenderChanged() when genderChanged != null:
+return genderChanged(_that.gender);case GenerateDiagnosis() when generateDiagnosis != null:
+return generateDiagnosis();case AiDiagnosisSettled() when aiDiagnosisSettled != null:
+return aiDiagnosisSettled(_that.diagnosis);case _:
   return orElse();
 
 }
@@ -160,15 +180,20 @@ return generateDiagnosis();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String name)  nameChanged,required TResult Function( String age)  ageChanged,required TResult Function( double duration)  durationChanged,required TResult Function( String prakriti)  prakritiChanged,required TResult Function( String symptom,  bool isAdding)  symptomToggled,required TResult Function()  generateDiagnosis,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String name)  nameChanged,required TResult Function( String age)  ageChanged,required TResult Function( String input)  symptomInputChanged,required TResult Function()  addSymptom,required TResult Function( String symptom)  removeSymptom,required TResult Function( String description)  symptomsDescriptionChanged,required TResult Function( double duration)  durationChanged,required TResult Function( String prakriti)  prakritiChanged,required TResult Function( String gender)  genderChanged,required TResult Function()  generateDiagnosis,required TResult Function( AiDiagnosisEntity diagnosis)  aiDiagnosisSettled,}) {final _that = this;
 switch (_that) {
-case _NameChanged():
-return nameChanged(_that.name);case _AgeChanged():
-return ageChanged(_that.age);case _DurationChanged():
-return durationChanged(_that.duration);case _PrakritiChanged():
-return prakritiChanged(_that.prakriti);case _SymptomToggled():
-return symptomToggled(_that.symptom,_that.isAdding);case _GenerateDiagnosis():
-return generateDiagnosis();case _:
+case NameChanged():
+return nameChanged(_that.name);case AgeChanged():
+return ageChanged(_that.age);case SymptomInputChanged():
+return symptomInputChanged(_that.input);case AddSymptom():
+return addSymptom();case RemoveSymptom():
+return removeSymptom(_that.symptom);case SymptomsDescriptionChanged():
+return symptomsDescriptionChanged(_that.description);case DurationChanged():
+return durationChanged(_that.duration);case PrakritiChanged():
+return prakritiChanged(_that.prakriti);case GenderChanged():
+return genderChanged(_that.gender);case GenerateDiagnosis():
+return generateDiagnosis();case AiDiagnosisSettled():
+return aiDiagnosisSettled(_that.diagnosis);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -185,15 +210,20 @@ return generateDiagnosis();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String name)?  nameChanged,TResult? Function( String age)?  ageChanged,TResult? Function( double duration)?  durationChanged,TResult? Function( String prakriti)?  prakritiChanged,TResult? Function( String symptom,  bool isAdding)?  symptomToggled,TResult? Function()?  generateDiagnosis,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String name)?  nameChanged,TResult? Function( String age)?  ageChanged,TResult? Function( String input)?  symptomInputChanged,TResult? Function()?  addSymptom,TResult? Function( String symptom)?  removeSymptom,TResult? Function( String description)?  symptomsDescriptionChanged,TResult? Function( double duration)?  durationChanged,TResult? Function( String prakriti)?  prakritiChanged,TResult? Function( String gender)?  genderChanged,TResult? Function()?  generateDiagnosis,TResult? Function( AiDiagnosisEntity diagnosis)?  aiDiagnosisSettled,}) {final _that = this;
 switch (_that) {
-case _NameChanged() when nameChanged != null:
-return nameChanged(_that.name);case _AgeChanged() when ageChanged != null:
-return ageChanged(_that.age);case _DurationChanged() when durationChanged != null:
-return durationChanged(_that.duration);case _PrakritiChanged() when prakritiChanged != null:
-return prakritiChanged(_that.prakriti);case _SymptomToggled() when symptomToggled != null:
-return symptomToggled(_that.symptom,_that.isAdding);case _GenerateDiagnosis() when generateDiagnosis != null:
-return generateDiagnosis();case _:
+case NameChanged() when nameChanged != null:
+return nameChanged(_that.name);case AgeChanged() when ageChanged != null:
+return ageChanged(_that.age);case SymptomInputChanged() when symptomInputChanged != null:
+return symptomInputChanged(_that.input);case AddSymptom() when addSymptom != null:
+return addSymptom();case RemoveSymptom() when removeSymptom != null:
+return removeSymptom(_that.symptom);case SymptomsDescriptionChanged() when symptomsDescriptionChanged != null:
+return symptomsDescriptionChanged(_that.description);case DurationChanged() when durationChanged != null:
+return durationChanged(_that.duration);case PrakritiChanged() when prakritiChanged != null:
+return prakritiChanged(_that.prakriti);case GenderChanged() when genderChanged != null:
+return genderChanged(_that.gender);case GenerateDiagnosis() when generateDiagnosis != null:
+return generateDiagnosis();case AiDiagnosisSettled() when aiDiagnosisSettled != null:
+return aiDiagnosisSettled(_that.diagnosis);case _:
   return null;
 
 }
@@ -204,8 +234,8 @@ return generateDiagnosis();case _:
 /// @nodoc
 
 
-class _NameChanged implements ConsultationEvent {
-  const _NameChanged(this.name);
+class NameChanged implements ConsultationEvent {
+  const NameChanged(this.name);
   
 
  final  String name;
@@ -214,13 +244,13 @@ class _NameChanged implements ConsultationEvent {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$NameChangedCopyWith<_NameChanged> get copyWith => __$NameChangedCopyWithImpl<_NameChanged>(this, _$identity);
+$NameChangedCopyWith<NameChanged> get copyWith => _$NameChangedCopyWithImpl<NameChanged>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NameChanged&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NameChanged&&(identical(other.name, name) || other.name == name));
 }
 
 
@@ -236,8 +266,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$NameChangedCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
-  factory _$NameChangedCopyWith(_NameChanged value, $Res Function(_NameChanged) _then) = __$NameChangedCopyWithImpl;
+abstract mixin class $NameChangedCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
+  factory $NameChangedCopyWith(NameChanged value, $Res Function(NameChanged) _then) = _$NameChangedCopyWithImpl;
 @useResult
 $Res call({
  String name
@@ -248,17 +278,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$NameChangedCopyWithImpl<$Res>
-    implements _$NameChangedCopyWith<$Res> {
-  __$NameChangedCopyWithImpl(this._self, this._then);
+class _$NameChangedCopyWithImpl<$Res>
+    implements $NameChangedCopyWith<$Res> {
+  _$NameChangedCopyWithImpl(this._self, this._then);
 
-  final _NameChanged _self;
-  final $Res Function(_NameChanged) _then;
+  final NameChanged _self;
+  final $Res Function(NameChanged) _then;
 
 /// Create a copy of ConsultationEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? name = null,}) {
-  return _then(_NameChanged(
+  return _then(NameChanged(
 null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -270,8 +300,8 @@ as String,
 /// @nodoc
 
 
-class _AgeChanged implements ConsultationEvent {
-  const _AgeChanged(this.age);
+class AgeChanged implements ConsultationEvent {
+  const AgeChanged(this.age);
   
 
  final  String age;
@@ -280,13 +310,13 @@ class _AgeChanged implements ConsultationEvent {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$AgeChangedCopyWith<_AgeChanged> get copyWith => __$AgeChangedCopyWithImpl<_AgeChanged>(this, _$identity);
+$AgeChangedCopyWith<AgeChanged> get copyWith => _$AgeChangedCopyWithImpl<AgeChanged>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AgeChanged&&(identical(other.age, age) || other.age == age));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AgeChanged&&(identical(other.age, age) || other.age == age));
 }
 
 
@@ -302,8 +332,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$AgeChangedCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
-  factory _$AgeChangedCopyWith(_AgeChanged value, $Res Function(_AgeChanged) _then) = __$AgeChangedCopyWithImpl;
+abstract mixin class $AgeChangedCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
+  factory $AgeChangedCopyWith(AgeChanged value, $Res Function(AgeChanged) _then) = _$AgeChangedCopyWithImpl;
 @useResult
 $Res call({
  String age
@@ -314,17 +344,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$AgeChangedCopyWithImpl<$Res>
-    implements _$AgeChangedCopyWith<$Res> {
-  __$AgeChangedCopyWithImpl(this._self, this._then);
+class _$AgeChangedCopyWithImpl<$Res>
+    implements $AgeChangedCopyWith<$Res> {
+  _$AgeChangedCopyWithImpl(this._self, this._then);
 
-  final _AgeChanged _self;
-  final $Res Function(_AgeChanged) _then;
+  final AgeChanged _self;
+  final $Res Function(AgeChanged) _then;
 
 /// Create a copy of ConsultationEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? age = null,}) {
-  return _then(_AgeChanged(
+  return _then(AgeChanged(
 null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -336,8 +366,238 @@ as String,
 /// @nodoc
 
 
-class _DurationChanged implements ConsultationEvent {
-  const _DurationChanged(this.duration);
+class SymptomInputChanged implements ConsultationEvent {
+  const SymptomInputChanged(this.input);
+  
+
+ final  String input;
+
+/// Create a copy of ConsultationEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SymptomInputChangedCopyWith<SymptomInputChanged> get copyWith => _$SymptomInputChangedCopyWithImpl<SymptomInputChanged>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SymptomInputChanged&&(identical(other.input, input) || other.input == input));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,input);
+
+@override
+String toString() {
+  return 'ConsultationEvent.symptomInputChanged(input: $input)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $SymptomInputChangedCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
+  factory $SymptomInputChangedCopyWith(SymptomInputChanged value, $Res Function(SymptomInputChanged) _then) = _$SymptomInputChangedCopyWithImpl;
+@useResult
+$Res call({
+ String input
+});
+
+
+
+
+}
+/// @nodoc
+class _$SymptomInputChangedCopyWithImpl<$Res>
+    implements $SymptomInputChangedCopyWith<$Res> {
+  _$SymptomInputChangedCopyWithImpl(this._self, this._then);
+
+  final SymptomInputChanged _self;
+  final $Res Function(SymptomInputChanged) _then;
+
+/// Create a copy of ConsultationEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? input = null,}) {
+  return _then(SymptomInputChanged(
+null == input ? _self.input : input // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class AddSymptom implements ConsultationEvent {
+  const AddSymptom();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddSymptom);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'ConsultationEvent.addSymptom()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class RemoveSymptom implements ConsultationEvent {
+  const RemoveSymptom(this.symptom);
+  
+
+ final  String symptom;
+
+/// Create a copy of ConsultationEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$RemoveSymptomCopyWith<RemoveSymptom> get copyWith => _$RemoveSymptomCopyWithImpl<RemoveSymptom>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RemoveSymptom&&(identical(other.symptom, symptom) || other.symptom == symptom));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,symptom);
+
+@override
+String toString() {
+  return 'ConsultationEvent.removeSymptom(symptom: $symptom)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $RemoveSymptomCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
+  factory $RemoveSymptomCopyWith(RemoveSymptom value, $Res Function(RemoveSymptom) _then) = _$RemoveSymptomCopyWithImpl;
+@useResult
+$Res call({
+ String symptom
+});
+
+
+
+
+}
+/// @nodoc
+class _$RemoveSymptomCopyWithImpl<$Res>
+    implements $RemoveSymptomCopyWith<$Res> {
+  _$RemoveSymptomCopyWithImpl(this._self, this._then);
+
+  final RemoveSymptom _self;
+  final $Res Function(RemoveSymptom) _then;
+
+/// Create a copy of ConsultationEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? symptom = null,}) {
+  return _then(RemoveSymptom(
+null == symptom ? _self.symptom : symptom // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class SymptomsDescriptionChanged implements ConsultationEvent {
+  const SymptomsDescriptionChanged(this.description);
+  
+
+ final  String description;
+
+/// Create a copy of ConsultationEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SymptomsDescriptionChangedCopyWith<SymptomsDescriptionChanged> get copyWith => _$SymptomsDescriptionChangedCopyWithImpl<SymptomsDescriptionChanged>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SymptomsDescriptionChanged&&(identical(other.description, description) || other.description == description));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,description);
+
+@override
+String toString() {
+  return 'ConsultationEvent.symptomsDescriptionChanged(description: $description)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $SymptomsDescriptionChangedCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
+  factory $SymptomsDescriptionChangedCopyWith(SymptomsDescriptionChanged value, $Res Function(SymptomsDescriptionChanged) _then) = _$SymptomsDescriptionChangedCopyWithImpl;
+@useResult
+$Res call({
+ String description
+});
+
+
+
+
+}
+/// @nodoc
+class _$SymptomsDescriptionChangedCopyWithImpl<$Res>
+    implements $SymptomsDescriptionChangedCopyWith<$Res> {
+  _$SymptomsDescriptionChangedCopyWithImpl(this._self, this._then);
+
+  final SymptomsDescriptionChanged _self;
+  final $Res Function(SymptomsDescriptionChanged) _then;
+
+/// Create a copy of ConsultationEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? description = null,}) {
+  return _then(SymptomsDescriptionChanged(
+null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class DurationChanged implements ConsultationEvent {
+  const DurationChanged(this.duration);
   
 
  final  double duration;
@@ -346,13 +606,13 @@ class _DurationChanged implements ConsultationEvent {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$DurationChangedCopyWith<_DurationChanged> get copyWith => __$DurationChangedCopyWithImpl<_DurationChanged>(this, _$identity);
+$DurationChangedCopyWith<DurationChanged> get copyWith => _$DurationChangedCopyWithImpl<DurationChanged>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DurationChanged&&(identical(other.duration, duration) || other.duration == duration));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DurationChanged&&(identical(other.duration, duration) || other.duration == duration));
 }
 
 
@@ -368,8 +628,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$DurationChangedCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
-  factory _$DurationChangedCopyWith(_DurationChanged value, $Res Function(_DurationChanged) _then) = __$DurationChangedCopyWithImpl;
+abstract mixin class $DurationChangedCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
+  factory $DurationChangedCopyWith(DurationChanged value, $Res Function(DurationChanged) _then) = _$DurationChangedCopyWithImpl;
 @useResult
 $Res call({
  double duration
@@ -380,17 +640,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$DurationChangedCopyWithImpl<$Res>
-    implements _$DurationChangedCopyWith<$Res> {
-  __$DurationChangedCopyWithImpl(this._self, this._then);
+class _$DurationChangedCopyWithImpl<$Res>
+    implements $DurationChangedCopyWith<$Res> {
+  _$DurationChangedCopyWithImpl(this._self, this._then);
 
-  final _DurationChanged _self;
-  final $Res Function(_DurationChanged) _then;
+  final DurationChanged _self;
+  final $Res Function(DurationChanged) _then;
 
 /// Create a copy of ConsultationEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? duration = null,}) {
-  return _then(_DurationChanged(
+  return _then(DurationChanged(
 null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
 as double,
   ));
@@ -402,8 +662,8 @@ as double,
 /// @nodoc
 
 
-class _PrakritiChanged implements ConsultationEvent {
-  const _PrakritiChanged(this.prakriti);
+class PrakritiChanged implements ConsultationEvent {
+  const PrakritiChanged(this.prakriti);
   
 
  final  String prakriti;
@@ -412,13 +672,13 @@ class _PrakritiChanged implements ConsultationEvent {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$PrakritiChangedCopyWith<_PrakritiChanged> get copyWith => __$PrakritiChangedCopyWithImpl<_PrakritiChanged>(this, _$identity);
+$PrakritiChangedCopyWith<PrakritiChanged> get copyWith => _$PrakritiChangedCopyWithImpl<PrakritiChanged>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PrakritiChanged&&(identical(other.prakriti, prakriti) || other.prakriti == prakriti));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PrakritiChanged&&(identical(other.prakriti, prakriti) || other.prakriti == prakriti));
 }
 
 
@@ -434,8 +694,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$PrakritiChangedCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
-  factory _$PrakritiChangedCopyWith(_PrakritiChanged value, $Res Function(_PrakritiChanged) _then) = __$PrakritiChangedCopyWithImpl;
+abstract mixin class $PrakritiChangedCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
+  factory $PrakritiChangedCopyWith(PrakritiChanged value, $Res Function(PrakritiChanged) _then) = _$PrakritiChangedCopyWithImpl;
 @useResult
 $Res call({
  String prakriti
@@ -446,17 +706,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$PrakritiChangedCopyWithImpl<$Res>
-    implements _$PrakritiChangedCopyWith<$Res> {
-  __$PrakritiChangedCopyWithImpl(this._self, this._then);
+class _$PrakritiChangedCopyWithImpl<$Res>
+    implements $PrakritiChangedCopyWith<$Res> {
+  _$PrakritiChangedCopyWithImpl(this._self, this._then);
 
-  final _PrakritiChanged _self;
-  final $Res Function(_PrakritiChanged) _then;
+  final PrakritiChanged _self;
+  final $Res Function(PrakritiChanged) _then;
 
 /// Create a copy of ConsultationEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? prakriti = null,}) {
-  return _then(_PrakritiChanged(
+  return _then(PrakritiChanged(
 null == prakriti ? _self.prakriti : prakriti // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -468,44 +728,43 @@ as String,
 /// @nodoc
 
 
-class _SymptomToggled implements ConsultationEvent {
-  const _SymptomToggled(this.symptom, this.isAdding);
+class GenderChanged implements ConsultationEvent {
+  const GenderChanged(this.gender);
   
 
- final  String symptom;
- final  bool isAdding;
+ final  String gender;
 
 /// Create a copy of ConsultationEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SymptomToggledCopyWith<_SymptomToggled> get copyWith => __$SymptomToggledCopyWithImpl<_SymptomToggled>(this, _$identity);
+$GenderChangedCopyWith<GenderChanged> get copyWith => _$GenderChangedCopyWithImpl<GenderChanged>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SymptomToggled&&(identical(other.symptom, symptom) || other.symptom == symptom)&&(identical(other.isAdding, isAdding) || other.isAdding == isAdding));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GenderChanged&&(identical(other.gender, gender) || other.gender == gender));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,symptom,isAdding);
+int get hashCode => Object.hash(runtimeType,gender);
 
 @override
 String toString() {
-  return 'ConsultationEvent.symptomToggled(symptom: $symptom, isAdding: $isAdding)';
+  return 'ConsultationEvent.genderChanged(gender: $gender)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SymptomToggledCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
-  factory _$SymptomToggledCopyWith(_SymptomToggled value, $Res Function(_SymptomToggled) _then) = __$SymptomToggledCopyWithImpl;
+abstract mixin class $GenderChangedCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
+  factory $GenderChangedCopyWith(GenderChanged value, $Res Function(GenderChanged) _then) = _$GenderChangedCopyWithImpl;
 @useResult
 $Res call({
- String symptom, bool isAdding
+ String gender
 });
 
 
@@ -513,20 +772,19 @@ $Res call({
 
 }
 /// @nodoc
-class __$SymptomToggledCopyWithImpl<$Res>
-    implements _$SymptomToggledCopyWith<$Res> {
-  __$SymptomToggledCopyWithImpl(this._self, this._then);
+class _$GenderChangedCopyWithImpl<$Res>
+    implements $GenderChangedCopyWith<$Res> {
+  _$GenderChangedCopyWithImpl(this._self, this._then);
 
-  final _SymptomToggled _self;
-  final $Res Function(_SymptomToggled) _then;
+  final GenderChanged _self;
+  final $Res Function(GenderChanged) _then;
 
 /// Create a copy of ConsultationEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? symptom = null,Object? isAdding = null,}) {
-  return _then(_SymptomToggled(
-null == symptom ? _self.symptom : symptom // ignore: cast_nullable_to_non_nullable
-as String,null == isAdding ? _self.isAdding : isAdding // ignore: cast_nullable_to_non_nullable
-as bool,
+@pragma('vm:prefer-inline') $Res call({Object? gender = null,}) {
+  return _then(GenderChanged(
+null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -536,8 +794,8 @@ as bool,
 /// @nodoc
 
 
-class _GenerateDiagnosis implements ConsultationEvent {
-  const _GenerateDiagnosis();
+class GenerateDiagnosis implements ConsultationEvent {
+  const GenerateDiagnosis();
   
 
 
@@ -547,7 +805,7 @@ class _GenerateDiagnosis implements ConsultationEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GenerateDiagnosis);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GenerateDiagnosis);
 }
 
 
@@ -564,5 +822,71 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class AiDiagnosisSettled implements ConsultationEvent {
+  const AiDiagnosisSettled(this.diagnosis);
+  
+
+ final  AiDiagnosisEntity diagnosis;
+
+/// Create a copy of ConsultationEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AiDiagnosisSettledCopyWith<AiDiagnosisSettled> get copyWith => _$AiDiagnosisSettledCopyWithImpl<AiDiagnosisSettled>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AiDiagnosisSettled&&(identical(other.diagnosis, diagnosis) || other.diagnosis == diagnosis));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,diagnosis);
+
+@override
+String toString() {
+  return 'ConsultationEvent.aiDiagnosisSettled(diagnosis: $diagnosis)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $AiDiagnosisSettledCopyWith<$Res> implements $ConsultationEventCopyWith<$Res> {
+  factory $AiDiagnosisSettledCopyWith(AiDiagnosisSettled value, $Res Function(AiDiagnosisSettled) _then) = _$AiDiagnosisSettledCopyWithImpl;
+@useResult
+$Res call({
+ AiDiagnosisEntity diagnosis
+});
+
+
+
+
+}
+/// @nodoc
+class _$AiDiagnosisSettledCopyWithImpl<$Res>
+    implements $AiDiagnosisSettledCopyWith<$Res> {
+  _$AiDiagnosisSettledCopyWithImpl(this._self, this._then);
+
+  final AiDiagnosisSettled _self;
+  final $Res Function(AiDiagnosisSettled) _then;
+
+/// Create a copy of ConsultationEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? diagnosis = null,}) {
+  return _then(AiDiagnosisSettled(
+null == diagnosis ? _self.diagnosis : diagnosis // ignore: cast_nullable_to_non_nullable
+as AiDiagnosisEntity,
+  ));
+}
+
+
+}
 
 // dart format on

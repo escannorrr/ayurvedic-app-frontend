@@ -49,12 +49,12 @@ class SettingsLocalDataSourceImpl implements SettingsLocalDataSource {
       aiLanguage: aiLang,
       aiTone: aiTone,
       profile: const UserProfileModel(
-        name: 'Dr. Arjun',
-        lastName: 'Mehta',
-        email: 'arjun.mehta@vaidya.ai',
-        mobile: '+91 98765 43210',
-        clinicName: 'AyuCare Wellness Center',
-        specialty: 'Ayurvedic Specialist',
+        name: '',
+        lastName: '',
+        email: '',
+        mobile: '',
+        clinicName: '',
+        specialty: '',
         avatarUrl: '',
       ),
     );

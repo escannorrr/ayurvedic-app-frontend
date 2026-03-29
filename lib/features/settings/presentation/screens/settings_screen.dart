@@ -14,6 +14,8 @@ import '../widgets/security_plan_card.dart';
 import '../widgets/settings_footer_actions.dart';
 import '../widgets/settings_skeleton.dart';
 import '../../../../core/utils/screen_size.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../auth/presentation/bloc/auth_event.dart';
 
 import 'package:vaidyaai/l10n/app_localizations.dart';
 
@@ -178,7 +180,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     context.read<SettingsBloc>().add(const SettingsEvent.saveSettings());
                   },
                   onLogout: () {
-                    context.read<SettingsBloc>().add(const SettingsEvent.logout());
+                    context.read<AuthBloc>().add(const LogoutRequested());
                   },
                 ),
                 SizedBox(height: isMobile ? 32 : 48),

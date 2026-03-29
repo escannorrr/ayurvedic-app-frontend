@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
 import 'package:vaidyaai/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../bloc/saved_cases_bloc.dart';
-import '../bloc/saved_cases_event.dart';
-import '../bloc/saved_cases_state.dart';
+import '../bloc/cases_bloc.dart';
+import '../bloc/cases_event.dart';
+import '../bloc/cases_state.dart';
 
 class CasesSearchBar extends StatelessWidget {
   const CasesSearchBar({super.key});
@@ -14,7 +14,7 @@ class CasesSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     
-    return BlocBuilder<SavedCasesBloc, SavedCasesState>(
+    return BlocBuilder<CasesBloc, CasesState>(
       builder: (context, state) {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -29,13 +29,7 @@ class CasesSearchBar extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: TextField(
-                  onChanged: (query) => context.read<SavedCasesBloc>().add(SavedCasesEvent.searchCases(query)),
-                  // Note: We use the value from state for the initial value if we had a controller,
-                  // but for a stateless TextField without a persistent controller, 
-                  // it's better to just let it be or use a controller in a Zero-setState StatefulWidget.
-                  // However, the user specifically asked for StatelessWidget where possible.
-                  // To support clearing, we might actually need a controller or a key.
-                  // I'll use a controller in a Zero-setState StatefulWidget for the BEST UX (clearing text).
+                  onChanged: (query) => context.read<CasesBloc>().add(CasesEvent.searchCases(query)),
                   style: Theme.of(context).textTheme.bodyMedium,
                   decoration: InputDecoration(
                     hintText: l10n.searchSavedCases,
@@ -48,7 +42,7 @@ class CasesSearchBar extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.close, size: 20, color: AppColors.outline),
                   onPressed: () {
-                    context.read<SavedCasesBloc>().add(const SavedCasesEvent.searchCases(''));
+                    context.read<CasesBloc>().add(const CasesEvent.searchCases(''));
                   },
                 ),
             ],

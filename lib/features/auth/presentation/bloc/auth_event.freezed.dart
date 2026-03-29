@@ -55,13 +55,13 @@ extension AuthEventPatterns on AuthEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _EmailChanged value)?  emailChanged,TResult Function( _PasswordChanged value)?  passwordChanged,TResult Function( _LoginSubmitted value)?  loginSubmitted,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( AppStarted value)?  appStarted,TResult Function( LoginRequested value)?  loginRequested,TResult Function( LogoutRequested value)?  logoutRequested,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _EmailChanged() when emailChanged != null:
-return emailChanged(_that);case _PasswordChanged() when passwordChanged != null:
-return passwordChanged(_that);case _LoginSubmitted() when loginSubmitted != null:
-return loginSubmitted(_that);case _:
+case AppStarted() when appStarted != null:
+return appStarted(_that);case LoginRequested() when loginRequested != null:
+return loginRequested(_that);case LogoutRequested() when logoutRequested != null:
+return logoutRequested(_that);case _:
   return orElse();
 
 }
@@ -79,13 +79,13 @@ return loginSubmitted(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _EmailChanged value)  emailChanged,required TResult Function( _PasswordChanged value)  passwordChanged,required TResult Function( _LoginSubmitted value)  loginSubmitted,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( AppStarted value)  appStarted,required TResult Function( LoginRequested value)  loginRequested,required TResult Function( LogoutRequested value)  logoutRequested,}){
 final _that = this;
 switch (_that) {
-case _EmailChanged():
-return emailChanged(_that);case _PasswordChanged():
-return passwordChanged(_that);case _LoginSubmitted():
-return loginSubmitted(_that);case _:
+case AppStarted():
+return appStarted(_that);case LoginRequested():
+return loginRequested(_that);case LogoutRequested():
+return logoutRequested(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -102,13 +102,13 @@ return loginSubmitted(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _EmailChanged value)?  emailChanged,TResult? Function( _PasswordChanged value)?  passwordChanged,TResult? Function( _LoginSubmitted value)?  loginSubmitted,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( AppStarted value)?  appStarted,TResult? Function( LoginRequested value)?  loginRequested,TResult? Function( LogoutRequested value)?  logoutRequested,}){
 final _that = this;
 switch (_that) {
-case _EmailChanged() when emailChanged != null:
-return emailChanged(_that);case _PasswordChanged() when passwordChanged != null:
-return passwordChanged(_that);case _LoginSubmitted() when loginSubmitted != null:
-return loginSubmitted(_that);case _:
+case AppStarted() when appStarted != null:
+return appStarted(_that);case LoginRequested() when loginRequested != null:
+return loginRequested(_that);case LogoutRequested() when logoutRequested != null:
+return logoutRequested(_that);case _:
   return null;
 
 }
@@ -125,12 +125,12 @@ return loginSubmitted(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email)?  emailChanged,TResult Function( String password)?  passwordChanged,TResult Function()?  loginSubmitted,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  appStarted,TResult Function( String email,  String password)?  loginRequested,TResult Function()?  logoutRequested,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _EmailChanged() when emailChanged != null:
-return emailChanged(_that.email);case _PasswordChanged() when passwordChanged != null:
-return passwordChanged(_that.password);case _LoginSubmitted() when loginSubmitted != null:
-return loginSubmitted();case _:
+case AppStarted() when appStarted != null:
+return appStarted();case LoginRequested() when loginRequested != null:
+return loginRequested(_that.email,_that.password);case LogoutRequested() when logoutRequested != null:
+return logoutRequested();case _:
   return orElse();
 
 }
@@ -148,12 +148,12 @@ return loginSubmitted();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email)  emailChanged,required TResult Function( String password)  passwordChanged,required TResult Function()  loginSubmitted,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  appStarted,required TResult Function( String email,  String password)  loginRequested,required TResult Function()  logoutRequested,}) {final _that = this;
 switch (_that) {
-case _EmailChanged():
-return emailChanged(_that.email);case _PasswordChanged():
-return passwordChanged(_that.password);case _LoginSubmitted():
-return loginSubmitted();case _:
+case AppStarted():
+return appStarted();case LoginRequested():
+return loginRequested(_that.email,_that.password);case LogoutRequested():
+return logoutRequested();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -170,12 +170,12 @@ return loginSubmitted();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email)?  emailChanged,TResult? Function( String password)?  passwordChanged,TResult? Function()?  loginSubmitted,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  appStarted,TResult? Function( String email,  String password)?  loginRequested,TResult? Function()?  logoutRequested,}) {final _that = this;
 switch (_that) {
-case _EmailChanged() when emailChanged != null:
-return emailChanged(_that.email);case _PasswordChanged() when passwordChanged != null:
-return passwordChanged(_that.password);case _LoginSubmitted() when loginSubmitted != null:
-return loginSubmitted();case _:
+case AppStarted() when appStarted != null:
+return appStarted();case LoginRequested() when loginRequested != null:
+return loginRequested(_that.email,_that.password);case LogoutRequested() when logoutRequested != null:
+return logoutRequested();case _:
   return null;
 
 }
@@ -186,140 +186,8 @@ return loginSubmitted();case _:
 /// @nodoc
 
 
-class _EmailChanged implements AuthEvent {
-  const _EmailChanged(this.email);
-  
-
- final  String email;
-
-/// Create a copy of AuthEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$EmailChangedCopyWith<_EmailChanged> get copyWith => __$EmailChangedCopyWithImpl<_EmailChanged>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EmailChanged&&(identical(other.email, email) || other.email == email));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,email);
-
-@override
-String toString() {
-  return 'AuthEvent.emailChanged(email: $email)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$EmailChangedCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
-  factory _$EmailChangedCopyWith(_EmailChanged value, $Res Function(_EmailChanged) _then) = __$EmailChangedCopyWithImpl;
-@useResult
-$Res call({
- String email
-});
-
-
-
-
-}
-/// @nodoc
-class __$EmailChangedCopyWithImpl<$Res>
-    implements _$EmailChangedCopyWith<$Res> {
-  __$EmailChangedCopyWithImpl(this._self, this._then);
-
-  final _EmailChanged _self;
-  final $Res Function(_EmailChanged) _then;
-
-/// Create a copy of AuthEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? email = null,}) {
-  return _then(_EmailChanged(
-null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _PasswordChanged implements AuthEvent {
-  const _PasswordChanged(this.password);
-  
-
- final  String password;
-
-/// Create a copy of AuthEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$PasswordChangedCopyWith<_PasswordChanged> get copyWith => __$PasswordChangedCopyWithImpl<_PasswordChanged>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PasswordChanged&&(identical(other.password, password) || other.password == password));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,password);
-
-@override
-String toString() {
-  return 'AuthEvent.passwordChanged(password: $password)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$PasswordChangedCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
-  factory _$PasswordChangedCopyWith(_PasswordChanged value, $Res Function(_PasswordChanged) _then) = __$PasswordChangedCopyWithImpl;
-@useResult
-$Res call({
- String password
-});
-
-
-
-
-}
-/// @nodoc
-class __$PasswordChangedCopyWithImpl<$Res>
-    implements _$PasswordChangedCopyWith<$Res> {
-  __$PasswordChangedCopyWithImpl(this._self, this._then);
-
-  final _PasswordChanged _self;
-  final $Res Function(_PasswordChanged) _then;
-
-/// Create a copy of AuthEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? password = null,}) {
-  return _then(_PasswordChanged(
-null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _LoginSubmitted implements AuthEvent {
-  const _LoginSubmitted();
+class AppStarted implements AuthEvent {
+  const AppStarted();
   
 
 
@@ -329,7 +197,7 @@ class _LoginSubmitted implements AuthEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginSubmitted);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppStarted);
 }
 
 
@@ -338,7 +206,107 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'AuthEvent.loginSubmitted()';
+  return 'AuthEvent.appStarted()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class LoginRequested implements AuthEvent {
+  const LoginRequested(this.email, this.password);
+  
+
+ final  String email;
+ final  String password;
+
+/// Create a copy of AuthEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoginRequestedCopyWith<LoginRequested> get copyWith => _$LoginRequestedCopyWithImpl<LoginRequested>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginRequested&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,email,password);
+
+@override
+String toString() {
+  return 'AuthEvent.loginRequested(email: $email, password: $password)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $LoginRequestedCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
+  factory $LoginRequestedCopyWith(LoginRequested value, $Res Function(LoginRequested) _then) = _$LoginRequestedCopyWithImpl;
+@useResult
+$Res call({
+ String email, String password
+});
+
+
+
+
+}
+/// @nodoc
+class _$LoginRequestedCopyWithImpl<$Res>
+    implements $LoginRequestedCopyWith<$Res> {
+  _$LoginRequestedCopyWithImpl(this._self, this._then);
+
+  final LoginRequested _self;
+  final $Res Function(LoginRequested) _then;
+
+/// Create a copy of AuthEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,}) {
+  return _then(LoginRequested(
+null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class LogoutRequested implements AuthEvent {
+  const LogoutRequested();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LogoutRequested);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'AuthEvent.logoutRequested()';
 }
 
 

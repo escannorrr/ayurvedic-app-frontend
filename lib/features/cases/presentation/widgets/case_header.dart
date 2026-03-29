@@ -48,7 +48,7 @@ class CaseHeader extends StatelessWidget {
                   const Icon(Icons.chevron_right_rounded, size: 18, color: AppColors.outline),
                   const SizedBox(width: 12),
                   Text(
-                    l10n.caseIdLabel(caseId.substring(0, 4).toUpperCase()),
+                    l10n.caseIdLabel(caseId.length > 4 ? caseId.substring(0, 4).toUpperCase() : caseId.toUpperCase()),
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: AppColors.primary,
                       fontWeight: FontWeight.w800,
